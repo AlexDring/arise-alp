@@ -1,9 +1,36 @@
-<div class="hero">
-  <h1>HERO</h1>
-</div>
+---
+import heroImage from '../media/Farm-yard.jpeg'
+---
+
+<section class="full-width">
+  <div>
+    <h1>Alternative Learning Provision and Mentoring Services
+    </h1>
+    <p>Set within the therapeutic surroundings of Hartcliffe City Farm, ARISE offers 1:1 mentoring and alternative education for young people who are struggling to engage in a mainstream setting.</p>
+  </div>
+</section>
 
 <style>
-  .hero {
-    margin-top: 250px;
+  section {
+    height: 100vh; 
+    background-image: url('../media/Farm-yard.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border: 10px solid white; 
+    > div {
+      /* background-color: #fff; */
+      max-width: 820px; 
+      margin-inline: auto;
+      margin-top: 190px;
+      display: flex;
+      flex-direction: column;
+      /* justify-content: center; */
+      align-items: center;
+      text-align: center;
+      p {
+        font-size: 1.5rem;
+      }
+    }
   }
+  
 </style>

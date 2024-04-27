@@ -1,8 +1,14 @@
 ---
+import { Image } from "astro:assets"
+
+import logo from '../media/arise-logo.png'
 const currentPath = Astro.url.pathname
 ---
 
 <div class="nav-bar">
+  <div>
+    <Image src={logo} alt="Arise ALP logo" />
+  </div>
   <nav>
     <ul>
       <li><a href="/" class={currentPath === '/' ? 'current' : ''}>Home</a></li>
