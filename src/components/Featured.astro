@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets'
+import featuredImage from '../media/featured-image.jpg'
+---
+
+<section>
+  <Image src={featuredImage} alt="Inclusive education in action." />
+  <div>
+    <header>
+      <p class="subheading">We Love Naughty Boys</p>
+      <h2>Our Curriculum</h2>
+    </header>
+    <p
+      >We provide an enriching curriculum that equips our students with the
+      skills and support needed to move on to positive destinations.
+    </p>
+    <p>
+      Our curriculum is supplemented with a variety of qualifications. We can
+      also support learners with GCSEs that they might be sitting with their
+      commissioning school. We believe in a delivering quality academic sessions
+      each morning, delivered by our talented teaching staff.
+    </p>
+  </div>
+</section>
+
+<style>
+  section {
+    margin-top: 60px;
+    margin-bottom: 60px;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    img {
+      object-fit: cover;
+    }
+  }
+</style>

@@ -1,0 +1,56 @@
+---
+const currentPath = Astro.url.pathname
+---
+
+<div class="nav-bar">
+  <nav>
+    <ul>
+      <li><a href="/" class={currentPath === '/' ? 'current' : ''}>Home</a></li>
+      <li><a href="#">Our Offer</a></li>
+      <li><a href="#">Documents</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+</div>
+<style>
+  .nav-bar {
+    position: fixed;
+    top: 30px;
+    display: flex;
+    width: 100%;
+    max-width: 1170px;
+  }
+  nav {
+    background-color: #fff;
+    border-radius: var(--border-rad);
+    display: inline-flex;
+    box-shadow: var(--drop-shadow);
+    z-index: 9;
+    margin-left: auto;
+  }
+  ul {
+    display: flex;
+    list-style: none;
+    padding: 3px;
+    margin: 0;
+    gap: 3px;
+    margin-left: auto;
+  }
+  a {
+    padding: 15px 25px;
+    border-radius: var(--border-rad);
+    display: inline-block;
+    transition: ease-in-out 0.22s all;
+    font-size: 1.125rem;
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--text-color);
+    &:hover {
+      background-color: rgba(32, 87, 224, 0.05);
+    }
+    &.current {
+      background-color: var(--blue);
+      color: #fff;
+    }
+  }
+</style>

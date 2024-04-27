@@ -1,0 +1,46 @@
+---
+import { Image } from 'astro:assets'
+import highlightedImage from '../media/highlighted.jpg'
+---
+
+<section>
+  <div>
+    <head>
+      <p class="subheading">Building a Future</p>
+      <h3>A Sense of Belonging </h3>
+    </head>
+    <p>
+      Our curriculum is designed with Bristol's Belonging Strategy in mind. This
+      is especially important to us as many of our students may feel a sense of
+      rejection from the commissioning school. We focus heavily on adopting a
+      trauma informed approach that helps foster strong and lasting
+      relationships built on trust. Our students have many opportunities to get
+      involved with community-based activities (both within and outside our
+      Hartcliffe city farm location). These further that sense of belonging to
+      the community.
+    </p>
+  </div>
+  <Image src={highlightedImage} alt="teacher drawing on whiteboard" />
+</section>
+
+<style>
+  section {
+    display: grid;
+    grid-template-columns: 7fr 1fr 4fr;
+    align-items: center;
+    margin-top: 120px;
+    /* gap: 30px; */
+  }
+  div {
+    background: #ffa69e;
+    padding: 120px 85px 120px 115px;
+    grid-area: 1/1/2/3;
+  }
+  img {
+    border-radius: var(--border-rad);
+    grid-area: 1/2/2/4;
+    width: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+</style>
