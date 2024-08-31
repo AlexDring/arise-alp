@@ -1,8 +1,20 @@
 import { defineConfig } from 'astro/config';
+import storyblok from "@storyblok/astro";
+// import react from "@astrojs/react";
+import { loadEnv } from 'vite';
 
-import react from "@astrojs/react";
+const env = loadEnv("", process.cwd(), 'STORYBLOK');
 
-// https://astro.build/config
 export default defineConfig({
-  integrations: [react()]
+  integrations: [
+    storyblok({
+      accessToken: env.STORYBLOK_TOKEN,
+      components: {
+        // Add your components here
+        featured: "components/Featured",
+        page: 'storyblok/Page',
+      },
+    }),
+    // react()
+  ],
 });
