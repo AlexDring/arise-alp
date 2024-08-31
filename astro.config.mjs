@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 import storyblok from "@storyblok/astro";
 // import react from "@astrojs/react";
-// import { loadEnv } from 'vite';
+import { loadEnv } from 'vite';
 import netlify from "@astrojs/netlify/functions";
 
 const env = loadEnv("", process.cwd(), 'STORYBLOK');
