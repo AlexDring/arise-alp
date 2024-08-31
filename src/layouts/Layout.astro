@@ -137,13 +137,14 @@ const { title } = Astro.props
   main {
     /* max-width: 1170px; */
     margin-inline: auto;
-    position: relative; 
+    position: relative;
   }
-.full-width,
+  .full-width,
   .content-grid {
     display: grid;
-    grid-template-columns: 
-    [full-width-start] 1fr [content-start] minmax(min-content, 1170px) [content-end] 1fr [full-width-end];
+    grid-template-columns:
+      [full-width-start] 1fr [content-start] minmax(min-content, 1170px)
+      [content-end] 1fr [full-width-end];
     > * {
       grid-column: content;
       &.full-width {
@@ -157,5 +158,8 @@ const { title } = Astro.props
     font-weight: 600;
     letter-spacing: 1px;
     margin-bottom: 0.625rem;
+  }
+  .featured:nth-child(even) {
+    flex-direction: row-reverse;
   }
 </style>

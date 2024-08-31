@@ -1,0 +1,39 @@
+---
+import { Image } from 'astro:assets'
+import logo from '../media/arise-logo.png'
+---
+
+<footer>
+  <div class="content-grid">
+    <div>
+      <Image src={logo} alt="Arise ALP logo" />
+      <p
+        >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+      </p>
+    </div>
+    <div></div>
+    <div></div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    grid-column: full-width;
+    background: radial-gradient(
+        62.38% 68.53% at 24.34% 58.75%,
+        rgba(255, 166, 158, 0.3) 0%,
+        rgba(255, 166, 158, 0) 100%
+      ),
+      radial-gradient(
+        235.27% 59.43% at 92.5% 3.53%,
+        rgba(32, 87, 224, 0.17) 0%,
+        rgba(255, 255, 255, 0.25) 100%
+      );
+    margin-top: 120px;
+    > div {
+      padding-top: 60px;
+      padding-bottom: 240px;
+    }
+  }
+</style>
