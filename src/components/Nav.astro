@@ -1,20 +1,33 @@
 ---
-import { Image } from "astro:assets"
+import { Image } from 'astro:assets'
 
 import logo from '../media/arise-logo.png'
-const currentPath = Astro.url.pathname
+// const currentPath = Astro.url.pathname
+
+import { useStoryblokApi } from '@storyblok/astro'
+const storyblokApi = useStoryblokApi()
+const { data } = await storyblokApi.get('cdn/stories/config', {
+  version: 'draft',
+  resolve_links: 'url'
+})
+const headerMenu = data?.story?.content?.header_menu
 ---
 
-<div class="nav-bar">
+<div class="nav-bar" class="full-width">
   <div>
     <Image src={logo} alt="Arise ALP logo" />
   </div>
   <nav>
     <ul>
-      <li><a href="/" class={currentPath === '/' ? 'current' : ''}>Home</a></li>
-      <li><a href="#">Our Offer</a></li>
-      <li><a href="#">Documents</a></li>
-      <li><a href="#">Contact</a></li>
+      {
+        headerMenu.map((menu) => (
+          <li>
+            <a href={`/${menu.link.cached_url}`} class="hover:text-[#50b0ae]">
+              {menu.link.story.name}
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </nav>
 </div>
@@ -22,9 +35,13 @@ const currentPath = Astro.url.pathname
   .nav-bar {
     position: fixed;
     top: 30px;
+    right: 0;
+    left: 0;
     display: flex;
+    margin-inline: auto;
     width: 100%;
     max-width: 1170px;
+    z-index: 10;
   }
   nav {
     background-color: #fff;

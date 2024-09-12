@@ -1,26 +1,23 @@
 ---
 import { Image } from 'astro:assets'
-import highlightedImage from '../media/highlighted.jpg'
+
+import { storyblokEditable, renderRichText } from '@storyblok/astro'
+
+const { blok } = Astro.props
+const content = renderRichText(blok.content)
 ---
 
-<section>
+<section {...storyblokEditable(blok)}>
   <div>
     <head>
-      <p class="subheading">Building a Future</p>
-      <h3>A Sense of Belonging </h3>
+      <p class="subheading">{blok.sub_heading}</p>
+      <h3>{blok.heading}</h3>
     </head>
-    <p>
-      Our curriculum is designed with Bristol's Belonging Strategy in mind. This
-      is especially important to us as many of our students may feel a sense of
-      rejection from the commissioning school. We focus heavily on adopting a
-      trauma informed approach that helps foster strong and lasting
-      relationships built on trust. Our students have many opportunities to get
-      involved with community-based activities (both within and outside our
-      Hartcliffe city farm location). These further that sense of belonging to
-      the community.
-    </p>
+    <Fragment set:html={content} />
   </div>
-  <Image src={highlightedImage} alt="teacher drawing on whiteboard" />
+  <!-- <img src={blok.image.filename} alt={blok.image.alt} /> -->
+
+  <Image inferSize={true} src={blok.image.filename} alt={blok.image.alt} />
 </section>
 
 <style>

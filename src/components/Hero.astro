@@ -1,17 +1,17 @@
 ---
 import { Image } from 'astro:assets'
 import heroImage from '../media/Farm-yard.jpg'
+
+import { storyblokEditable } from '@storyblok/astro'
+
+const { blok } = Astro.props
 ---
 
-<section class="full-width">
+<section class="full-width" {...storyblokEditable(blok)}>
   <Image src={heroImage} alt="teacher drawing on whiteboard" />
   <div>
-    <h1>Alternative Learning Provision and Mentoring Services </h1>
-    <p
-      >Set within the therapeutic surroundings of Hartcliffe City Farm, ARISE
-      offers 1:1 mentoring and alternative education for young people who are
-      struggling to engage in a mainstream setting.</p
-    >
+    <h1>{blok.heading}</h1>
+    <p>{blok.content}</p>
   </div>
 </section>
 

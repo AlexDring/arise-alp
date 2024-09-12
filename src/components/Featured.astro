@@ -1,25 +1,21 @@
 ---
 import { Image } from 'astro:assets'
 import featuredImage from '../media/featured-image.jpg'
+
+import { storyblokEditable, renderRichText } from '@storyblok/astro'
+
+const { blok } = Astro.props
+const content = renderRichText(blok.content)
 ---
 
-<section class="featured">
+<section class="featured" {...storyblokEditable(blok)}>
   <Image src={featuredImage} alt="Inclusive education in action." />
   <div>
     <header>
-      <p class="subheading">Give us your naughty kids</p>
-      <h2>Our Curriculum</h2>
+      <p class="subheading">{blok.sub_heading}</p>
+      <h2>{blok.heading}</h2>
     </header>
-    <p
-      >We provide an enriching curriculum that equips our students with the
-      skills and support needed to move on to positive destinations.
-    </p>
-    <p>
-      Our curriculum is supplemented with a variety of qualifications. We can
-      also support learners with GCSEs that they might be sitting with their
-      commissioning school. We believe in a delivering quality academic sessions
-      each morning, delivered by our talented teaching staff.
-    </p>
+    <Fragment set:html={content} />
   </div>
 </section>
 
