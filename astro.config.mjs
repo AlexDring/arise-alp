@@ -24,6 +24,7 @@ export default defineConfig({
       featured: 'components/Featured',
       highlighted: 'components/Highlighted',
       hero: 'components/Hero',
+      banner: 'components/Banner',
     },
   })]
 });

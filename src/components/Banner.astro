@@ -1,0 +1,31 @@
+---
+import { storyblokEditable, renderRichText } from "@storyblok/astro"
+
+const { blok } = Astro.props
+const content = renderRichText(blok.content)
+---
+
+<section class="full-width" {...storyblokEditable(blok)}>
+  <div>
+    <h1>{blok.heading}</h1>
+    <Fragment set:html={content} />
+  </div>
+</section>
+
+<style>
+  section {
+    padding-top: 180px;
+    padding-bottom: 60px;
+    grid-area: full-width;
+    background: radial-gradient(
+        29.4% 72.86% at 49.06% 49.92%,
+        rgba(255, 166, 158, 0.4) 0%,
+        rgba(255, 166, 158, 0) 100%
+      ),
+      radial-gradient(
+        235.27% 59.43% at 92.5% 3.53%,
+        rgba(32, 87, 224, 0.6) 0%,
+        rgba(255, 255, 255, 0.85) 100%
+      );
+  }
+</style>
