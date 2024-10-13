@@ -34,7 +34,22 @@ import Footer from '../components/Footer.astro'
     --border-rad: 10px;
     --border-rad-sm: 7px;
     --drop-shadow: 0px 0px 5px rgba(32, 87, 224, 0.17);
+
+    /** Breakpoints */
+    --mobile: 34.375rem; /* 550px */
+    --tablet-sm: 50rem; /* 800px */
+    --tablet: 68.75rem; /* 1100px */
+    --laptop: 93.75rem; /* 1500px */
+
+    /** Spacing */
+    --spacing-sm: 12px;
+    --spacing-md: 24px;
+    --spacing-lg: 72px;
+
+    /** Font */
+    --font-heading: 'Lora Variable', serif;
   }
+
   /* Reset */
   /*
   1. Use a more-intuitive box-sizing model.
@@ -113,26 +128,26 @@ import Footer from '../components/Footer.astro'
   h4,
   h5,
   h6 {
-    font-family: 'Lora Variable', serif;
+    font-family: var(--font-heading);
     line-height: 1;
-    margin-bottom: 15px;
+    margin-bottom: var(--spacing-sm);
   }
 
   h1 {
     /* font-size: 4.58333333rem; */
-    font-size: 3.4375rem;
+    font-size: clamp(2.5rem, 5vw, 3.4375rem);
   }
   h2 {
-    font-size: 3.2rem;
+    font-size: clamp(2.5rem, 5vw, 3.2rem);
     margin-bottom: 2.1875rem;
   }
 
   h3 {
-    font-size: 3.33333333rem;
+    font-size: clamp(2rem, 5vw, 3rem);
   }
 
   h4 {
-    font-size: 2.5rem;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
   }
   main {
     /* max-width: 1170px; */
@@ -143,8 +158,11 @@ import Footer from '../components/Footer.astro'
   .content-grid {
     display: grid;
     grid-template-columns:
-      [full-width-start] 1fr [content-start] minmax(min-content, 1170px)
-      [content-end] 1fr [full-width-end];
+      [full-width-start] minmax(20px, 1fr) [content-start] minmax(
+        min-content,
+        73.125rem
+      )
+      [content-end] minmax(20px, 1fr) [full-width-end];
     > * {
       grid-column: content;
       &.full-width {
@@ -153,7 +171,7 @@ import Footer from '../components/Footer.astro'
     }
   }
   .subheading {
-    font-size: 1.25rem;
+    font-size: clamp(1rem, 2vw, 1.25rem);
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 1px;
