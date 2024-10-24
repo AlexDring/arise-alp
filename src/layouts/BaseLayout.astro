@@ -1,12 +1,12 @@
 ---
-import '@fontsource/roboto/400.css'
-import '@fontsource/roboto/500.css'
-import '@fontsource/roboto/700.css'
+import "@fontsource/roboto/400.css"
+import "@fontsource/roboto/500.css"
+import "@fontsource/roboto/700.css"
 // Supports weights 400-700
-import '@fontsource-variable/lora'
+import "@fontsource-variable/lora"
 
-import Nav from '../components/Nav.astro'
-import Footer from '../components/Footer.astro'
+import Nav from "../components/Nav.astro"
+import Footer from "../components/Footer.astro"
 ---
 
 <!doctype html>
@@ -47,7 +47,7 @@ import Footer from '../components/Footer.astro'
     --spacing-lg: 72px;
 
     /** Font */
-    --font-heading: 'Lora Variable', serif;
+    --font-heading: "Lora Variable", serif;
   }
 
   /* Reset */
@@ -115,7 +115,7 @@ import Footer from '../components/Footer.astro'
   }
 
   body {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     color: var(--text-color);
   }
   p {
@@ -185,3 +185,43 @@ import Footer from '../components/Footer.astro'
     }
   }
 </style>
+
+<script>
+  // const elementsToObserve = document.querySelectorAll(".observe")
+
+  // const observer = new IntersectionObserver(
+  //   (entries) => {
+  //     if (entries[0].isIntersecting) {
+  //       console.log("in view")
+  //       document.querySelector(".observe").classList.add("in-view")
+  //     }
+  //   },
+  //   { threshold: 0.5 }
+  // )
+
+  // // Convert NodeList to an array before mapping
+  // Array.from(elementsToObserve).map((element) => {
+  //   observer.observe(element)
+  // })
+
+  const elementsToObserve = document.querySelectorAll(".observe")
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          console.log("in view")
+          entry.target.classList.add("in-view")
+        } else {
+          // entry.target.classList.remove("in-view") // Optionally remove the class when out of view
+        }
+      })
+    },
+    { threshold: 0.6 }
+  )
+
+  // Use forEach instead of map, no need to convert NodeList to an array
+  elementsToObserve.forEach((element) => {
+    observer.observe(element)
+  })
+</script>

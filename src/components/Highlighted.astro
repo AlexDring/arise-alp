@@ -1,7 +1,7 @@
 ---
-import { Image } from 'astro:assets'
+import { Image } from "astro:assets"
 
-import { storyblokEditable, renderRichText } from '@storyblok/astro'
+import { storyblokEditable, renderRichText } from "@storyblok/astro"
 
 const { blok } = Astro.props
 const content = renderRichText(blok.content)
@@ -48,8 +48,8 @@ const content = renderRichText(blok.content)
         rgba(255, 255, 255, 0.15) 100%
       ),
       #fff;
-    padding: clamp(60px, 10vw, 120px) clamp(40px, 7vw, 85px)
-      clamp(60px, 10vw, 120px) clamp(50px, 8vw, 115px);
+    padding: clamp(60px, 10vw, 120px) clamp(30px, 7vw, 85px)
+      clamp(30px, 10vw, 120px) clamp(30px, 8vw, 115px);
     @media (max-width: 50rem) {
       padding-top: var(--spacing-lg);
     }

@@ -1,14 +1,14 @@
 ---
-import { Image } from 'astro:assets'
+import { Image } from "astro:assets"
 
-import logo from '../media/arise-logo.png'
+import logo from "../media/arise-logo.png"
 // const currentPath = Astro.url.pathname
 
-import { useStoryblokApi } from '@storyblok/astro'
+import { useStoryblokApi } from "@storyblok/astro"
 const storyblokApi = useStoryblokApi()
-const { data } = await storyblokApi.get('cdn/stories/config', {
-  version: 'draft',
-  resolve_links: 'url'
+const { data } = await storyblokApi.get("cdn/stories/config", {
+  version: "draft",
+  resolve_links: "url"
 })
 const headerMenu = data?.story?.content?.header_menu
 ---
@@ -130,16 +130,16 @@ const headerMenu = data?.story?.content?.header_menu
   }
 </style>
 <script>
-  const menuList = document.getElementById('menu')
-  const menuToggle = document.getElementById('menu-toggle')
+  const menuList = document.getElementById("menu")
+  const menuToggle = document.getElementById("menu-toggle")
 
-  menuToggle.addEventListener('click', () => {
-    if (menuList.classList.contains('is-active')) {
-      menuList.classList.remove('is-active')
-      menuToggle.setAttribute('aria-expanded', 'false')
+  menuToggle.addEventListener("click", () => {
+    if (menuList.classList.contains("is-active")) {
+      menuList.classList.remove("is-active")
+      menuToggle.setAttribute("aria-expanded", "false")
     } else {
-      menuList.classList.add('is-active')
-      menuToggle.setAttribute('aria-expanded', 'true')
+      menuList.classList.add("is-active")
+      menuToggle.setAttribute("aria-expanded", "true")
     }
   })
 </script>
