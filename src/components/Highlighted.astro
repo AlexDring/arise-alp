@@ -50,12 +50,15 @@ const content = renderRichText(blok.content)
       #fff;
     padding: clamp(60px, 10vw, 120px) clamp(40px, 7vw, 85px)
       clamp(60px, 10vw, 120px) clamp(50px, 8vw, 115px);
+    @media (max-width: 50rem) {
+      padding-top: var(--spacing-lg);
+    }
     /* grid-area: 1/1/2/3; */
   }
   .highlighted__image {
     border-radius: var(--border-rad);
     grid-area: 1/2/4/4;
-
+    height: 100%;
     z-index: -1;
     img {
       width: 100%;
@@ -65,12 +68,13 @@ const content = renderRichText(blok.content)
     }
     @media (max-width: 50rem) {
       height: 100%;
-      max-width: 90%;
+      max-width: 85%;
       margin-inline: auto;
       margin-bottom: -10%;
-      max-height: 300px;
+      z-index: 0;
       img {
         /* max-height: 300px; */
+        aspect-ratio: 1/1;
       }
     }
   }

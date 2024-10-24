@@ -26,6 +26,7 @@ const nextThreeImages = images.slice(2, 5) // Adjust slice range if there are fe
           />
         ))
       }
+      <p class="gallery-grid__subheading">{blok.accent}</p>
     </div>
     <div class="gallery-grid__stacked">
       {
@@ -38,7 +39,7 @@ const nextThreeImages = images.slice(2, 5) // Adjust slice range if there are fe
         ))
       }
 
-      <p>{blok.accent}</p>
+      <p class="gallery-grid__subheading">{blok.accent}</p>
     </div>
   </div>
 </section>
@@ -61,8 +62,16 @@ const nextThreeImages = images.slice(2, 5) // Adjust slice range if there are fe
     column-gap: var(--spacing-md);
     padding-top: calc(var(--spacing-lg) * 2);
     padding-bottom: calc(var(--spacing-lg) * 2);
-    @media (max-width: 68.75rem) {
+    @media (max-width: 50rem) {
       column-count: 1;
+      display: grid;
+      gap: var(--spacing-md);
+      .gallery-grid__grid {
+        order: 3;
+      }
+      .gallery-grid__stacked {
+        order: 2;
+      }
     }
   }
   .gallery-grid__text {
@@ -71,6 +80,9 @@ const nextThreeImages = images.slice(2, 5) // Adjust slice range if there are fe
     padding-inline: var(--spacing-md);
     p {
       font-size: 1.3125rem;
+    }
+    @media (max-width: 50rem) {
+      margin-bottom: 0;
     }
   }
   .gallery-grid__grid {
@@ -85,13 +97,21 @@ const nextThreeImages = images.slice(2, 5) // Adjust slice range if there are fe
     img:nth-child(2) {
       grid-column: 2;
       aspect-ratio: 3 / 2;
+      @media (max-width: 50rem) {
+        display: none;
+      }
     }
     img:nth-child(3) {
       aspect-ratio: 8 / 7;
       margin-bottom: var(--spacing-lg);
     }
-    @media (max-width: 68.75rem) {
+    .gallery-grid__subheading {
       display: none;
+    }
+    @media (max-width: 50rem) {
+      img:nth-child(2) {
+        display: block;
+      }
     }
   }
   .gallery-grid__stacked {
@@ -100,14 +120,17 @@ const nextThreeImages = images.slice(2, 5) // Adjust slice range if there are fe
     img {
       aspect-ratio: 5 / 3;
     }
-    @media (max-width: 68.75rem) {
-      margin-top: var(--spacing-md);
+    @media (max-width: 50rem) {
+      img:nth-child(2),
+      .gallery-grid__subheading {
+        display: none;
+      }
     }
-    p {
-      font-size: 1.3rem;
-      font-family: var(--font-heading);
-      font-weight: 700;
-    }
+  }
+  .gallery-grid__subheading {
+    font-size: 1.3rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
   }
   img {
     object-fit: cover;

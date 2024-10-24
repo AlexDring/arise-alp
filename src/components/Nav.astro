@@ -18,7 +18,10 @@ const headerMenu = data?.story?.content?.header_menu
     <Image src={logo} alt="Arise ALP logo" />
   </div>
   <nav>
-    <ul>
+    <button id="menu-toggle" aria-expanded="false" aria-controls="menu"
+      >Menu</button
+    >
+    <ul id="menu">
       {
         headerMenu.map((menu) => (
           <li>
@@ -31,27 +34,53 @@ const headerMenu = data?.story?.content?.header_menu
     </ul>
   </nav>
 </div>
-<style>
+
+<style lang="scss">
+  #menu-toggle {
+    display: none;
+    margin-left: auto;
+    @media (max-width: 50rem) {
+      display: block;
+    }
+  }
+  #menu {
+    display: flex;
+    @media (max-width: 50rem) {
+      // display: none;
+      right: calc(-20px + -30vw);
+
+      &.is-active {
+        display: flex;
+        right: 0;
+      }
+    }
+  }
   .nav-bar {
     position: fixed;
-    top: 30px;
     right: 0;
+    top: 20px;
     left: 0;
-    padding: 0 10px;
+    padding: 0 20px;
     display: flex;
     margin-inline: auto;
     flex-wrap: wrap;
     width: 100%;
     max-width: 1170px;
     z-index: 10;
+    @media (min-width: 50rem) {
+      top: 30px;
+    }
   }
   nav {
-    background-color: #fff;
-    border-radius: var(--border-rad);
-    display: inline-flex;
-    box-shadow: var(--drop-shadow);
-    z-index: 9;
+    // background-color: #fff;
+    // box-shadow: var(--drop-shadow);
+    // z-index: 9;
     margin-left: auto;
+    @media (min-width: 50rem) {
+      display: inline-flex;
+      flex-direction: column;
+      border-radius: var(--border-rad);
+    }
   }
   ul {
     display: flex;
@@ -59,8 +88,28 @@ const headerMenu = data?.story?.content?.header_menu
     flex-wrap: wrap;
     padding: 3px;
     margin: 0;
+    position: relative;
     gap: 3px;
     margin-left: auto;
+    background-color: #fff;
+    box-shadow: var(--drop-shadow);
+    z-index: 9;
+    margin-left: auto;
+    transition: right 0.2s ease-in-out;
+    @media (max-width: 50rem) {
+      flex-direction: column;
+      width: 30vw;
+      padding: 0;
+      &.is-active {
+        right: 0;
+      }
+      li {
+        border-bottom: 1px solid #dadce0;
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
   }
   a {
     padding: 15px 25px;
@@ -80,3 +129,17 @@ const headerMenu = data?.story?.content?.header_menu
     }
   }
 </style>
+<script>
+  const menuList = document.getElementById('menu')
+  const menuToggle = document.getElementById('menu-toggle')
+
+  menuToggle.addEventListener('click', () => {
+    if (menuList.classList.contains('is-active')) {
+      menuList.classList.remove('is-active')
+      menuToggle.setAttribute('aria-expanded', 'false')
+    } else {
+      menuList.classList.add('is-active')
+      menuToggle.setAttribute('aria-expanded', 'true')
+    }
+  })
+</script>

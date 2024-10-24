@@ -120,6 +120,7 @@ import Footer from '../components/Footer.astro'
   }
   p {
     text-wrap: pretty;
+    font-size: 1.125rem;
     margin-bottom: 1.5rem;
   }
   h1,
@@ -179,5 +180,8 @@ import Footer from '../components/Footer.astro'
   }
   .featured:nth-child(even) {
     flex-direction: row-reverse;
+    @media (max-width: 50rem) {
+      flex-direction: column-reverse;
+    }
   }
 </style>
