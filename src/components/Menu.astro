@@ -1,0 +1,13 @@
+---
+const { menuItems, id: idName, ...rest } = Astro.props
+---
+
+<ul id={idName} {...rest}>
+  {
+    menuItems.map((item) => (
+      <li>
+        <a href={`/${item.link.cached_url}`}>{item.link.story.name}</a>
+      </li>
+    ))
+  }
+</ul>

@@ -4,6 +4,8 @@ import { Image } from "astro:assets"
 import logo from "../media/arise-logo.png"
 // const currentPath = Astro.url.pathname
 
+import Menu from "./Menu.astro"
+
 import { useStoryblokApi } from "@storyblok/astro"
 const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get("cdn/stories/config", {
@@ -13,133 +15,110 @@ const { data } = await storyblokApi.get("cdn/stories/config", {
 const headerMenu = data?.story?.content?.header_menu
 ---
 
-<div class="nav-bar" class="full-width">
+<div class="nav-bar at-top" class="full-width">
   <div>
     <Image src={logo} alt="Arise ALP logo" />
   </div>
   <nav>
-    <button id="menu-toggle" aria-expanded="false" aria-controls="menu"
-      >Menu</button
-    >
-    <ul id="menu">
-      {
-        headerMenu.map((menu) => (
-          <li>
-            <a href={`/${menu.link.cached_url}`} class="hover:text-[#50b0ae]">
-              {menu.link.story.name}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <button id="menu-toggle" aria-expanded="false" aria-controls="menu">
+      <span class="sr-only">Menu</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="36"
+        height="36"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="menu-icon"
+      >
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="36"
+        height="36"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="close-icon"
+      >
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <Menu id="menu" menuItems={headerMenu} />
+    <div class="mobile-menu-wrapper">
+      <Menu id="mobile-menu" menuItems={headerMenu} />
+    </div>
   </nav>
 </div>
 
-<style lang="scss">
-  #menu-toggle {
-    display: none;
-    margin-left: auto;
-    @media (max-width: 50rem) {
-      display: block;
-    }
-  }
-  #menu {
-    display: flex;
-    @media (max-width: 50rem) {
-      // display: none;
-      right: calc(-20px + -30vw);
-
-      &.is-active {
-        display: flex;
-        right: 0;
-      }
-    }
-  }
-  .nav-bar {
-    position: fixed;
-    right: 0;
-    top: 20px;
-    left: 0;
-    padding: 0 20px;
-    display: flex;
-    margin-inline: auto;
-    flex-wrap: wrap;
-    width: 100%;
-    max-width: 1170px;
-    z-index: 10;
-    @media (min-width: 50rem) {
-      top: 30px;
-    }
-  }
-  nav {
-    // background-color: #fff;
-    // box-shadow: var(--drop-shadow);
-    // z-index: 9;
-    margin-left: auto;
-    @media (min-width: 50rem) {
-      display: inline-flex;
-      flex-direction: column;
-      border-radius: var(--border-rad);
-    }
-  }
-  ul {
-    display: flex;
-    list-style: none;
-    flex-wrap: wrap;
-    padding: 3px;
-    margin: 0;
-    position: relative;
-    gap: 3px;
-    margin-left: auto;
-    background-color: #fff;
-    box-shadow: var(--drop-shadow);
-    z-index: 9;
-    margin-left: auto;
-    transition: right 0.2s ease-in-out;
-    @media (max-width: 50rem) {
-      flex-direction: column;
-      width: 30vw;
-      padding: 0;
-      &.is-active {
-        right: 0;
-      }
-      li {
-        border-bottom: 1px solid #dadce0;
-        &:last-child {
-          border-bottom: none;
-        }
-      }
-    }
-  }
-  a {
-    padding: 15px 25px;
-    border-radius: var(--border-rad);
-    display: inline-block;
-    transition: ease-in-out 0.22s all;
-    font-size: 1.125rem;
-    text-decoration: none;
-    font-weight: 700;
-    color: var(--text-color);
-    &:hover {
-      background-color: rgba(32, 87, 224, 0.05);
-    }
-    &.current {
-      background-color: var(--blue);
-      color: #fff;
-    }
-  }
-</style>
+<style lang="scss"></style>
 <script>
-  const menuList = document.getElementById("menu")
+  const mobileMenu = document.getElementById("mobile-menu")
   const menuToggle = document.getElementById("menu-toggle")
 
+  // menuToggle.addEventListener("click", () => {
+  //   if (menuList.classList.contains("is-active")) {
+  //     menuList.classList.remove("is-active")
+  //     menuToggle.setAttribute("aria-expanded", "false")
+  //   } else {
+  //     menuList.classList.add("is-active")
+  //     menuToggle.setAttribute("aria-expanded", "true")
+  //   }
+  // })
+
   menuToggle.addEventListener("click", () => {
-    if (menuList.classList.contains("is-active")) {
-      menuList.classList.remove("is-active")
+    mobileMenu.classList.toggle("active")
+    menuToggle.setAttribute(
+      "aria-expanded",
+      mobileMenu.classList.contains("active").toString()
+    )
+  })
+
+  // Close menu when clicking outside
+  document.addEventListener("click", (event) => {
+    const target = event.target
+    if (!mobileMenu.contains(target) && !menuToggle.contains(target)) {
+      mobileMenu.classList.remove("active")
       menuToggle.setAttribute("aria-expanded", "false")
-    } else {
-      menuList.classList.add("is-active")
-      menuToggle.setAttribute("aria-expanded", "true")
+    }
+  })
+
+  // Hide/show nav on scroll using requestAnimationFrame and throttling for better performance
+  let lastScrollTop = 0
+  let ticking = false
+  const nav = document.querySelector(".nav-bar")
+
+  window.addEventListener("scroll", () => {
+    // Only run if we're not already waiting for an animation frame
+    if (!ticking) {
+      // requestAnimationFrame syncs our DOM updates with the browser's render cycle
+      // This prevents unnecessary reflows and ensures smooth animations
+      window.requestAnimationFrame(() => {
+        const scrollTop = window.scrollY
+
+        if (scrollTop > lastScrollTop && scrollTop > 100) {
+          // Scrolling down & past initial 100px
+          nav.classList.add("hide")
+        } else {
+          // Scrolling up
+          nav.classList.remove("hide")
+        }
+
+        lastScrollTop = scrollTop
+        ticking = false
+      })
+
+      ticking = true // Prevent additional calculations until the current frame completes
     }
   })
 </script>

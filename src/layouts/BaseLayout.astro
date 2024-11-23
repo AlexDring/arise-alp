@@ -25,7 +25,7 @@ import Footer from "../components/Footer.astro"
     <Footer />
   </body>
 </html>
-<style is:global>
+<style is:global lang="scss">
   :root {
     --text-color: #212427;
     --orange: #ffa69e;
@@ -155,6 +155,20 @@ import Footer from "../components/Footer.astro"
     margin-inline: auto;
     position: relative;
   }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  // Grid
   .full-width,
   .content-grid {
     display: grid;
@@ -184,44 +198,168 @@ import Footer from "../components/Footer.astro"
       flex-direction: column-reverse;
     }
   }
+
+  // Nav - This has to be here because the #menu styles don't get passed through the component
+  #menu-toggle {
+    display: none;
+    margin-left: auto;
+    position: relative;
+    z-index: 2;
+    border: none;
+    background: none;
+    .close-icon {
+      display: none;
+    }
+    &[aria-expanded="true"] {
+      .close-icon {
+        display: block;
+      }
+      .menu-icon {
+        display: none;
+      }
+    }
+    @media (max-width: 50rem) {
+      display: block;
+    }
+  }
+  .nav-bar {
+    position: fixed;
+    right: 0;
+    top: 20px;
+    left: 0;
+    padding: 0 20px;
+    display: flex;
+    margin-inline: auto;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1170px;
+    z-index: 10;
+    transition: top 0.2s ease-in-out;
+    a {
+      padding: 15px 25px;
+      border-radius: var(--border-rad);
+      display: inline-block;
+      transition: ease-in-out 0.22s all;
+      font-size: 1.125rem;
+      text-decoration: none;
+      font-weight: 700;
+      color: var(--text-color);
+      &:hover {
+        background-color: rgba(32, 87, 224, 0.05);
+      }
+      &.current {
+        background-color: var(--blue);
+        color: #fff;
+      }
+    }
+
+    &.hide {
+      top: -83px;
+    }
+    nav {
+      margin-left: auto;
+    }
+    #menu {
+      display: flex;
+      list-style: none;
+      flex-wrap: wrap;
+      padding: 3px;
+      margin: 0;
+      position: relative;
+      gap: 3px;
+      margin-left: auto;
+      background-color: #fff;
+      border-radius: var(--border-rad);
+      box-shadow: var(--drop-shadow);
+      z-index: 9;
+      margin-left: auto;
+      transition: right 0.2s ease-in-out;
+      @media (max-width: 50rem) {
+        display: none;
+      }
+      a {
+        padding: 15px 25px;
+        border-radius: var(--border-rad);
+        display: inline-block;
+        transition: ease-in-out 0.22s all;
+        font-size: 1.125rem;
+        text-decoration: none;
+        font-weight: 700;
+        color: var(--text-color);
+        &:hover {
+          background-color: rgba(32, 87, 224, 0.05);
+        }
+        &.current {
+          background-color: var(--blue);
+          color: #fff;
+        }
+      }
+    }
+    .mobile-menu-wrapper #mobile-menu {
+      display: none;
+      @media (max-width: 50rem) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: fixed;
+        left: -50vw;
+        top: 0;
+        bottom: 0;
+        width: 50vw;
+        background: #fff;
+        list-style: none;
+        transition: left 0.2s ease-in-out;
+        margin: 0;
+        padding: 0;
+        a {
+          display: block;
+          opacity: 0;
+          transform: translateX(-100%);
+        }
+        li {
+          @for $i from 1 through 10 {
+            &:nth-child(#{$i}) {
+              a {
+                transition:
+                  opacity calc(0.5s + (#{$i}) * 0.1s) ease-in-out,
+                  transform calc(0.5s + (#{$i}) * 0.1s) ease-in-out;
+              }
+            }
+          }
+        }
+        &.active {
+          left: 0;
+          a {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+      }
+    }
+  }
 </style>
 
 <script>
-  // const elementsToObserve = document.querySelectorAll(".observe")
-
-  // const observer = new IntersectionObserver(
-  //   (entries) => {
-  //     if (entries[0].isIntersecting) {
-  //       console.log("in view")
-  //       document.querySelector(".observe").classList.add("in-view")
-  //     }
-  //   },
-  //   { threshold: 0.5 }
-  // )
-
-  // // Convert NodeList to an array before mapping
-  // Array.from(elementsToObserve).map((element) => {
-  //   observer.observe(element)
-  // })
-
   const elementsToObserve = document.querySelectorAll(".observe")
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          console.log("in view")
-          entry.target.classList.add("in-view")
-        } else {
-          // entry.target.classList.remove("in-view") // Optionally remove the class when out of view
-        }
-      })
-    },
-    { threshold: 0.6 }
-  )
+  if (elementsToObserve.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(({ target, isIntersecting }) => {
+          if (target.classList.contains("toggle")) {
+            target.classList.toggle("in-view", isIntersecting)
+          } else if (isIntersecting) {
+            target.classList.add("in-view")
+            observer.unobserve(target)
+          }
+        })
+      },
+      {
+        threshold: 0.5,
+        rootMargin: "0px"
+      }
+    )
 
-  // Use forEach instead of map, no need to convert NodeList to an array
-  elementsToObserve.forEach((element) => {
-    observer.observe(element)
-  })
+    elementsToObserve.forEach((element) => observer.observe(element))
+  }
 </script>
