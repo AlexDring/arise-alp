@@ -1,18 +1,18 @@
 import { defineConfig } from 'astro/config';
 import basicSsl from '@vitejs/plugin-basic-ssl'
 import storyblok from '@storyblok/astro'
-import netlify from "@astrojs/netlify/functions";
+import netlify from "@astrojs/netlify";
 import { loadEnv } from 'vite'
-const env = loadEnv("", process.cwd(), 'STORYBLOK')
+const env = loadEnv("", process.cwd(), '')
 
-// https://astro.build/config
+// https://astro.build/config 
 export default defineConfig({
   integrations: [
   storyblok({
-    accessToken: env.STORYBLOK_IS_PREVIEW === 'yes' 
-    ? env.STORYBLOK_PREVIEW_TOKEN 
-    : env.STORYBLOK_TOKEN,
-    bridge: env.STORYBLOK_IS_PREVIEW === 'yes',
+    accessToken: env.PUBLIC_STORYBLOK_IS_PREVIEW === 'yes' 
+    ? env.PREVIEW_STORYBLOK_TOKEN 
+    : env.PUBLIC_STORYBLOK_TOKEN,
+    bridge: env.PUBLIC_STORYBLOK_IS_PREVIEW === 'yes',
     components: {
       page: 'storyblok/Page',
       config: 'storyblok/Config',
@@ -23,10 +23,10 @@ export default defineConfig({
       hero_gallery: 'components/Hero-Gallery',
     },
   })],
-  output: env.STORYBLOK_IS_PREVIEW === 'yes' 
+  output: env.PUBLIC_STORYBLOK_IS_PREVIEW === 'yes' 
   ? 'server' 
   : 'static',
-  ...(env.STORYBLOK_ENV === 'development' && {
+  ...(import.meta.env.MODE === 'development' && {
     vite: {
       plugins: [basicSsl()],
       server: {

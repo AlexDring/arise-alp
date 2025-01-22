@@ -3,9 +3,9 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "STORYBLOK_ENV=development astro dev",
+    "dev": "astro dev",
     "start": "astro dev",
-    "build": "STORYBLOK_ENV=production astro build",
+    "build": "PUBLIC_STORYBLOK_IS_PREVIEW=no astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
