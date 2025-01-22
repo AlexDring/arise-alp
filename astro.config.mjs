@@ -9,7 +9,9 @@ const env = loadEnv("", process.cwd(), 'STORYBLOK')
 export default defineConfig({
   integrations: [
   storyblok({
-    accessToken: env.STORYBLOK_TOKEN,
+    accessToken: env.STORYBLOK_IS_PREVIEW === 'yes' 
+    ? env.STORYBLOK_PREVIEW_TOKEN 
+    : env.STORYBLOK_TOKEN,
     bridge: env.STORYBLOK_IS_PREVIEW === 'yes',
     components: {
       page: 'storyblok/Page',
@@ -21,7 +23,9 @@ export default defineConfig({
       hero_gallery: 'components/Hero-Gallery',
     },
   })],
-  output: env.STORYBLOK_IS_PREVIEW === 'yes' ? 'server' : 'static',
+  output: env.STORYBLOK_IS_PREVIEW === 'yes' 
+  ? 'server' 
+  : 'static',
   ...(env.STORYBLOK_ENV === 'development' && {
     vite: {
       plugins: [basicSsl()],
