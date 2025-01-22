@@ -1,5 +1,5 @@
 ---
-import { useStoryblokApi } from '@storyblok/astro'
+import { useStoryblokApi, useStoryblok } from '@storyblok/astro'
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
 import BaseLayout from '../layouts/BaseLayout.astro'
 import isPreview from '../utils/isPreview'
@@ -25,16 +25,29 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params
 
-const storyblokApi = useStoryblokApi()
+// const storyblokApi = useStoryblokApi()
 
-const { data } = await storyblokApi.get(
+// const { data } = await storyblokApi.get(
+//   `cdn/stories/${slug === undefined ? "home" : slug}`,
+//   {
+//     version: isPreview() ? 'draft' : 'published'
+//   }
+// )
+
+// const story = data.story
+
+const story = await useStoryblok(
+  // The slug to fetch
   `cdn/stories/${slug === undefined ? 'home' : slug}`,
+  // The API options
   {
     version: isPreview() ? 'draft' : 'published'
-  }
+  },
+  // The Bridge options (optional, if an empty object, null, or false are set, the API options will be considered automatically as far as applicable)
+  {},
+  // The Astro object (essential for the live preview functionality)
+  Astro
 )
-
-const story = data.story
 ---
 
 <BaseLayout>
