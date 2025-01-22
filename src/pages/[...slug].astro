@@ -4,8 +4,10 @@ import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
 import BaseLayout from '../layouts/BaseLayout.astro'
 import isPreview from '../utils/isPreview'
 
-const storyblokApi = useStoryblokApi()
+export const prerender = true
+
 export async function getStaticPaths() {
+  const storyblokApi = useStoryblokApi()
   const links = await storyblokApi.getAll('cdn/links', {
     version: isPreview() ? 'draft' : 'published'
   })
@@ -22,6 +24,8 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params
+
+const storyblokApi = useStoryblokApi()
 
 const { data } = await storyblokApi.get(
   `cdn/stories/${slug === undefined ? 'home' : slug}`,

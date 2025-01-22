@@ -3,17 +3,99 @@ import { Image } from 'astro:assets'
 import logo from '../media/arise-logo.png'
 ---
 
+<div class="content-grid wrapper">
+  <div class="container">
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2488.9901869819882!2d-2.5869462999999993!3d51.403234999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48718eaac01bbc95%3A0x373224249ba1d2c!2sHartcliffe%20City%20Farm!5e0!3m2!1sen!2suk!4v1737572199295!5m2!1sen!2suk"
+        width="500"
+        height="400"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="contact-container">
+      <form class="contact-form" name="contact" method="POST">
+        <fieldset>
+          <legend class="subheading">Get in touch</legend>
+          <div class="form-group">
+            <label class="sr-only" for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              aria-required="true"
+              placeholder="Name"
+            />
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              aria-required="true"
+              placeholder="Email"
+            />
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              required
+              aria-required="true"
+              placeholder="Message"></textarea>
+          </div>
+          <button type="submit">Send Message</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
 <footer>
   <div class="content-grid">
-    <div>
-      <Image src={logo} alt="Arise ALP logo" />
-      <p
-        >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
-      </p>
+    <div class="footer-container">
+      <div class="footer-logo">
+        <Image src={logo} alt="Arise ALP logo" />
+        <p
+          >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+      </div>
+      <div class="footer-menu">
+        <p class="subheading">Menu</p>
+        <ul>
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <li>
+            <a href="/about">About</a>
+          </li>
+          <li>
+            <a href="/contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <div class="legal-menu">
+        <p class="subheading">Legal</p>
+        <ul>
+          <li>
+            <a href="/cookies">Cookies</a>
+          </li>
+          <li>
+            <a href="/privacy-policy">Privacy policy</a>
+          </li>
+          <li>
+            <a href="/documents">Documents</a>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div></div>
-    <div></div>
   </div>
 </footer>
 
@@ -30,10 +112,121 @@ import logo from '../media/arise-logo.png'
         rgba(32, 87, 224, 0.17) 0%,
         rgba(255, 255, 255, 0.25) 100%
       );
-    margin-top: 120px;
     > div {
-      padding-top: 60px;
-      padding-bottom: 240px;
+      padding-top: 190px;
+      padding-bottom: 120px;
+    }
+    .footer-container {
+      /* display: grid;
+      grid-template-columns: repeat(3, 1fr); */
+      display: flex;
+      flex-wrap: wrap;
+      gap: 120px;
+      @media (max-width: 900px) {
+        gap: 60px;
+      }
+      .footer-logo {
+        flex-basis: 16.875rem;
+        p {
+          margin-top: 30px;
+          font-size: 1rem;
+        }
+      }
+      .footer-menu {
+        grid-column: 2 / 3;
+      }
+      .legal-menu {
+        grid-column: 3 / 4;
+      }
+    }
+  }
+  .legal-menu,
+  .footer-menu {
+    ul {
+      list-style: none;
+      padding: 0;
+      a {
+        display: block;
+        color: var(--text-color);
+        margin-bottom: 15px;
+      }
+    }
+  }
+  .wrapper {
+    position: relative;
+    bottom: -130px;
+    margin-top: 120px;
+  }
+  .container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* gap: 20px; */
+    /* padding: 20px; */
+    width: 100%;
+    height: 100%;
+    max-width: 1070px;
+    /* max-height: 448px; */
+    background-color: #bdcdf6;
+    border-radius: var(--border-rad);
+    @media (max-width: 900px) {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    .map-container {
+      grid-column: 1 / 2;
+    }
+    .contact-container {
+      grid-column: 2 / 3;
+    }
+  }
+  .map-container {
+    /* width: 100%; */
+    /* height: 100%; */
+    margin: 20px 10px 20px 20px;
+    min-height: 300px;
+    @media (max-width: 900px) {
+      margin: 10px 20px 20px;
+    }
+    iframe {
+      border-radius: var(--border-rad);
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .contact-container {
+    background-color: #fff;
+    padding: 20px 30px;
+    margin: 20px 20px 20px 10px;
+    border-radius: var(--border-rad);
+    @media (max-width: 900px) {
+      margin: 20px 20px 10px;
+    }
+    form {
+      width: 100%;
+      height: 100%;
+    }
+    fieldset {
+      border: none;
+      padding: 0;
+    }
+    button {
+      background-color: var(--blue);
+      color: white;
+      border-radius: var(--border-rad-sm);
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+    .form-group {
+      margin-bottom: 15px;
+      input,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: var(--border-rad-sm);
+        border: 1px solid #ccc;
+      }
     }
   }
 </style>
