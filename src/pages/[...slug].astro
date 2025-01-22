@@ -4,8 +4,7 @@ import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
 import BaseLayout from '../layouts/BaseLayout.astro'
 import isPreview from '../utils/isPreview'
 
-// Only prerender in static mode
-export const prerender = isPreview()
+export const prerender = true
 
 export async function getStaticPaths() {
   const storyblokApi = useStoryblokApi()

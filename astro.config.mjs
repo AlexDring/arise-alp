@@ -3,7 +3,7 @@ import basicSsl from '@vitejs/plugin-basic-ssl'
 import storyblok from '@storyblok/astro'
 import netlify from "@astrojs/netlify";
 import { loadEnv } from 'vite'
-const env = loadEnv("", process.cwd(), '')
+const env = loadEnv("", process.cwd(), 'STORYBLOK')
 
 // https://astro.build/config
 export default defineConfig({
