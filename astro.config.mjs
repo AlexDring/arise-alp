@@ -5,14 +5,14 @@ import netlify from "@astrojs/netlify";
 import { loadEnv } from 'vite'
 const env = loadEnv("", process.cwd(), '')
 
-// https://astro.build/config 
+// https://astro.build/config
 export default defineConfig({
   integrations: [
   storyblok({
-    accessToken: env.PUBLIC_STORYBLOK_IS_PREVIEW === 'yes' 
-    ? env.PREVIEW_STORYBLOK_TOKEN 
-    : env.PUBLIC_STORYBLOK_TOKEN,
-    bridge: env.PUBLIC_STORYBLOK_IS_PREVIEW === 'yes',
+    accessToken: env.STORYBLOK_IS_PREVIEW === 'yes' 
+    ? env.STORYBLOK_PREVIEW_TOKEN 
+    : env.STORYBLOK_PUBLIC_TOKEN,
+    bridge: env.STORYBLOK_IS_PREVIEW === 'yes',
     components: {
       page: 'storyblok/Page',
       config: 'storyblok/Config',
@@ -23,9 +23,9 @@ export default defineConfig({
       hero_gallery: 'components/Hero-Gallery',
     },
   })],
-  output: env.PUBLIC_STORYBLOK_IS_PREVIEW === 'yes' 
+  output: env.STORYBLOK_IS_PREVIEW === 'yes' 
   ? 'server' 
-  : 'static',
+: 'static',
   ...(import.meta.env.MODE === 'development' && {
     vite: {
       plugins: [basicSsl()],
@@ -34,7 +34,9 @@ export default defineConfig({
       }
     }
   }),
-  adapter: netlify({
-    imageCDN: false,
+  ...(env.STORYBLOK_IS_PREVIEW === 'yes' && {
+    adapter: netlify({
+      imageCDN: false,
+    })
   })
 });

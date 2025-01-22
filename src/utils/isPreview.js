@@ -1,3 +1,3 @@
 export default function isPreview() {
-  return import.meta.env.PUBLIC_STORYBLOK_IS_PREVIEW === 'yes'
+  return import.meta.env.STORYBLOK_IS_PREVIEW === 'yes'
 } 

@@ -1,16 +1,18 @@
 ---
-import { Image } from "astro:assets"
+import { Image } from 'astro:assets'
 
-import logo from "../media/arise-logo.png"
+import logo from '../media/arise-logo.png'
 // const currentPath = Astro.url.pathname
 
-import Menu from "./Menu.astro"
+import Menu from './Menu.astro'
 
-import { useStoryblokApi } from "@storyblok/astro"
+import { useStoryblokApi } from '@storyblok/astro'
+import isPreview from '../utils/isPreview'
+
 const storyblokApi = useStoryblokApi()
-const { data } = await storyblokApi.get("cdn/stories/config", {
-  version: "draft",
-  resolve_links: "url"
+const { data } = await storyblokApi.get('cdn/stories/config', {
+  version: isPreview() ? 'draft' : 'published',
+  resolve_links: 'url'
 })
 const headerMenu = data?.story?.content?.header_menu
 ---
@@ -63,8 +65,8 @@ const headerMenu = data?.story?.content?.header_menu
 
 <style lang="scss"></style>
 <script>
-  const mobileMenu = document.getElementById("mobile-menu")
-  const menuToggle = document.getElementById("menu-toggle")
+  const mobileMenu = document.getElementById('mobile-menu')
+  const menuToggle = document.getElementById('menu-toggle')
 
   // menuToggle.addEventListener("click", () => {
   //   if (menuList.classList.contains("is-active")) {
@@ -76,29 +78,29 @@ const headerMenu = data?.story?.content?.header_menu
   //   }
   // })
 
-  menuToggle.addEventListener("click", () => {
-    mobileMenu.classList.toggle("active")
+  menuToggle.addEventListener('click', () => {
+    mobileMenu.classList.toggle('active')
     menuToggle.setAttribute(
-      "aria-expanded",
-      mobileMenu.classList.contains("active").toString()
+      'aria-expanded',
+      mobileMenu.classList.contains('active').toString()
     )
   })
 
   // Close menu when clicking outside
-  document.addEventListener("click", (event) => {
+  document.addEventListener('click', (event) => {
     const target = event.target
     if (!mobileMenu.contains(target) && !menuToggle.contains(target)) {
-      mobileMenu.classList.remove("active")
-      menuToggle.setAttribute("aria-expanded", "false")
+      mobileMenu.classList.remove('active')
+      menuToggle.setAttribute('aria-expanded', 'false')
     }
   })
 
   // Hide/show nav on scroll using requestAnimationFrame and throttling for better performance
   let lastScrollTop = 0
   let ticking = false
-  const nav = document.querySelector(".nav-bar")
+  const nav = document.querySelector('.nav-bar')
 
-  window.addEventListener("scroll", () => {
+  window.addEventListener('scroll', () => {
     // Only run if we're not already waiting for an animation frame
     if (!ticking) {
       // requestAnimationFrame syncs our DOM updates with the browser's render cycle
@@ -108,10 +110,10 @@ const headerMenu = data?.story?.content?.header_menu
 
         if (scrollTop > lastScrollTop && scrollTop > 100) {
           // Scrolling down & past initial 100px
-          nav.classList.add("hide")
+          nav.classList.add('hide')
         } else {
           // Scrolling up
-          nav.classList.remove("hide")
+          nav.classList.remove('hide')
         }
 
         lastScrollTop = scrollTop
