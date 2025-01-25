@@ -1,18 +1,18 @@
 ---
-import { Image } from "astro:assets"
+import { Image } from 'astro:assets'
 
-import { storyblokEditable, renderRichText } from "@storyblok/astro"
+import { storyblokEditable, renderRichText } from '@storyblok/astro'
 
 const { blok } = Astro.props
 const content = renderRichText(blok.content)
 ---
 
-<section class="observe toggle" {...storyblokEditable(blok)}>
+<section {...storyblokEditable(blok)}>
   <div class="highlighted__text">
-    <head>
+    <header>
       <p class="subheading">{blok.sub_heading}</p>
       <h3>{blok.heading}</h3>
-    </head>
+    </header>
     <Fragment set:html={content} />
   </div>
   <!-- <img src={blok.image.filename} alt={blok.image.alt} /> -->
