@@ -7,7 +7,7 @@ const { blok } = Astro.props
 const content = renderRichText(blok.content)
 ---
 
-<section {...storyblokEditable(blok)}>
+<section {...storyblokEditable(blok)} class="observe toggle">
   <div class="highlighted__text">
     <header>
       <p class="subheading">{blok.sub_heading}</p>

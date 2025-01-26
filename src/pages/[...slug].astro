@@ -4,7 +4,8 @@ import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
 import BaseLayout from '../layouts/BaseLayout.astro'
 import isPreview from '../utils/isPreview'
 
-export const prerender = true
+// Don't prerender in SSR mode
+export const prerender = isPreview() ? false : true
 
 export async function getStaticPaths() {
   const storyblokApi = useStoryblokApi()
@@ -33,9 +34,6 @@ const { data } = await storyblokApi.get(
     version: isPreview() ? 'draft' : 'published'
   }
 )
-
-console.log('Fetching version:', isPreview() ? 'draft' : 'published')
-console.log(JSON.stringify(data, null, 2))
 
 const story = data.story
 ---
