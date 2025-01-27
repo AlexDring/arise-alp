@@ -27,7 +27,8 @@ export default defineConfig({
         highlighted: 'components/Highlighted',
         hero: 'components/Hero',
         banner: 'components/Banner',
-        hero_gallery: 'components/Hero-Gallery'
+        hero_gallery: 'components/Hero-Gallery',
+        text: 'components/Text'
       }
     })
   ],

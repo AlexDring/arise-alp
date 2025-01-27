@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets'
-// import featuredImage from '../media/featured-image.jpg'
 
 import { storyblokEditable, renderRichText } from '@storyblok/astro'
 
@@ -9,7 +8,6 @@ const content = renderRichText(blok.content)
 ---
 
 <section class="featured" {...storyblokEditable(blok)}>
-  <!-- <Image src={featuredImage} alt="Inclusive education in action." /> -->
   <div class="featured__image">
     <Image inferSize={true} src={blok.image.filename} alt={blok.image.alt} />
   </div>

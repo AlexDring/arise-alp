@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets'
-import heroImage from '../media/Farm-yard.jpg'
 
 import { storyblokEditable } from '@storyblok/astro'
 
@@ -8,7 +7,7 @@ const { blok } = Astro.props
 ---
 
 <section class="full-width" {...storyblokEditable(blok)}>
-  <Image src={heroImage} alt="teacher drawing on whiteboard" />
+  <Image inferSize={true} src={blok.image.filename} alt={blok.image.alt} />
   <div>
     <h1>{blok.heading}</h1>
     <p>{blok.content}</p>
