@@ -28,7 +28,8 @@ export default defineConfig({
         hero: 'components/Hero',
         banner: 'components/Banner',
         hero_gallery: 'components/Hero-Gallery',
-        text: 'components/Text'
+        text: 'components/Text',
+        scroll_section: 'components/Scroll-Section'
       }
     })
   ],
