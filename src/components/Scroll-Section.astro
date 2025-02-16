@@ -32,21 +32,11 @@ const { blok } = Astro.props
 
 <style lang="scss">
   .full-width {
-    grid-template-columns:
-      [full-width-start] minmax(20px, 1fr)
-      [content-start] 1170px [content-end] minmax(20px, 1fr)
-      [full-width-end];
+    overflow: clip;
     padding: 100px 0;
   }
   .scroll-section {
     padding: 60px 0;
-    // height: 500vh;
-    // background-color: #f0f0f0;
-    // grid-template-columns:
-    //   [full-width-start] minmax(20px, 1fr)
-    //   [content-start] 1170px [content-end] minmax(20px, 1fr)
-    //   [full-width-end];
-    // overflow: hidden;
   }
   .scroll-section__sticky-wrapper {
     width: 100%;
@@ -63,7 +53,7 @@ const { blok } = Astro.props
   .scroll-section__item {
     height: 75vh;
     /* width: 500vw; */
-    width: 25vw;
+    width: 320px;
     display: flex;
     flex-shrink: 0;
     justify-content: start;
