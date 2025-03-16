@@ -21,7 +21,7 @@ const headerMenu = data?.story?.content?.header_menu
   <div>
     <Image src={logo} alt="Arise ALP logo" />
   </div>
-  <nav>
+  <nav class="top">
     <button id="menu-toggle" aria-expanded="false" aria-controls="menu">
       <span class="sr-only">Menu</span>
       <svg
@@ -56,27 +56,135 @@ const headerMenu = data?.story?.content?.header_menu
         <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
     </button>
-    <Menu id="menu" menuItems={headerMenu} />
+    <!-- <Menu menuItems={headerMenu} /> -->
+    <ul id="menu">
+      <div class="dropwdown-background">
+        <span class="arrow"></span>
+      </div>
+      {
+        headerMenu.map((item) => {
+          if (item.component === 'menu_dropdown_link') {
+            return (
+              <li class="dropdown-trigger">
+                <a
+                  href={
+                    item.link.story.url === '/'
+                      ? '/'
+                      : `/${item.link.story.url}`
+                  }
+                >
+                  {item.link.story.name}
+                </a>
+                <div class="dropdown-content">
+                  <ul>
+                    {item.dropdown_menu.map((dropdownItem) => {
+                      return (
+                        <li>
+                          <a
+                            href={
+                              dropdownItem.link.story.url === '/'
+                                ? '/'
+                                : `/${dropdownItem.link.story.url}`
+                            }
+                          >
+                            {dropdownItem.link.story.name}
+                          </a>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+              </li>
+            )
+          }
+
+          return (
+            <li>
+              <a
+                href={
+                  item.link.story.url === '/' ? '/' : `/${item.link.story.url}`
+                }
+              >
+                {item.link.story.name}
+              </a>
+            </li>
+          )
+        })
+      }
+    </ul>
     <div class="mobile-menu-wrapper">
       <Menu id="mobile-menu" menuItems={headerMenu} />
     </div>
   </nav>
 </div>
 
-<style lang="scss"></style>
+<style lang="scss">
+  .dropwdown-background {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition:
+      all 0.3s,
+      opacity 0.1s,
+      translate 0.2s;
+    transform: translate(50%, 0%);
+    display: flex;
+    justify-content: center;
+    &.open {
+      opacity: 1;
+    }
+  }
+  .arrow {
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    background-color: #fff;
+    width: 50px;
+    height: 50px;
+    aspect-ratio: 1;
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+  .dropdown-trigger {
+    position: relative;
+  }
+  .dropdown-content {
+    opacity: 0;
+    position: absolute;
+    display: none;
+    transition: all 0.5s;
+    transform: translateY(75px);
+    will-change: transform;
+    top: -20px;
+    padding: 10px;
+    min-width: 200px;
+    ul {
+      list-style: none;
+      padding: 0;
+      a {
+        width: 100%;
+        font-size: 0.9rem !important;
+        display: inline-block !important;
+      }
+    }
+  }
+
+  .trigger-enter .dropdown-content {
+    display: block;
+  }
+  .trigger-enter-active .dropdown-content {
+    opacity: 1;
+  }
+</style>
 <script>
   const mobileMenu = document.getElementById('mobile-menu')
   const menuToggle = document.getElementById('menu-toggle')
-
-  // menuToggle.addEventListener("click", () => {
-  //   if (menuList.classList.contains("is-active")) {
-  //     menuList.classList.remove("is-active")
-  //     menuToggle.setAttribute("aria-expanded", "false")
-  //   } else {
-  //     menuList.classList.add("is-active")
-  //     menuToggle.setAttribute("aria-expanded", "true")
-  //   }
-  // })
 
   menuToggle.addEventListener('click', () => {
     mobileMenu.classList.toggle('active')
@@ -123,4 +231,49 @@ const headerMenu = data?.story?.content?.header_menu
       ticking = true // Prevent additional calculations until the current frame completes
     }
   })
+
+  // dropdown menu
+  const triggers = document.querySelectorAll('.dropdown-trigger')
+  const background = document.querySelector('.dropwdown-background')
+  const topNav = document.querySelector('.top')
+
+  function handleEnter() {
+    this.classList.add('trigger-enter')
+    setTimeout(() => {
+      if (this.classList.contains('trigger-enter')) {
+        this.classList.add('trigger-enter-active')
+      }
+    }, 150)
+    background.classList.add('open')
+
+    const dropdown = this.querySelector('.dropdown-content')
+    const dropdownCoords = dropdown.getBoundingClientRect()
+    const navCoords = topNav.getBoundingClientRect()
+    console.log(dropdownCoords)
+
+    const coords = {
+      height: dropdownCoords.height,
+      width: dropdownCoords.width,
+      top: dropdownCoords.top - navCoords.top,
+      left: dropdownCoords.left - navCoords.left
+    }
+    background.style.setProperty('width', `${coords.width}px`)
+    background.style.setProperty('height', `${coords.height}px`)
+    background.style.setProperty(
+      'transform',
+      `translate(${coords.left}px, ${coords.top}px)`
+    )
+  }
+
+  function handleLeave() {
+    this.classList.remove('trigger-enter', 'trigger-enter-active')
+    background.classList.remove('open')
+  }
+
+  triggers.forEach((trigger) =>
+    trigger.addEventListener('mouseenter', handleEnter)
+  )
+  triggers.forEach((trigger) =>
+    trigger.addEventListener('mouseleave', handleLeave)
+  )
 </script>
