@@ -27,7 +27,7 @@ import Footer from '../components/Footer.astro'
 </html>
 <style is:global lang="scss">
   :root {
-    --text-color: #212427;
+    --text-color: #212427dd;
     --orange: #ffa69e;
     --blue: #2057e0;
     --light-blue: #b8f3ff;
@@ -210,6 +210,7 @@ import Footer from '../components/Footer.astro'
     z-index: 2;
     border: none;
     background: none;
+
     .close-icon {
       display: none;
     }
@@ -302,6 +303,7 @@ import Footer from '../components/Footer.astro'
       display: none;
       @media (max-width: 50rem) {
         display: flex;
+        overflow-y: scroll;
         flex-direction: column;
         justify-content: center;
         position: fixed;
@@ -314,12 +316,24 @@ import Footer from '../components/Footer.astro'
         transition: left 0.2s ease-in-out;
         margin: 0;
         padding: 0;
+        box-shadow: var(--drop-shadow);
+
         a {
           display: block;
           opacity: 0;
           transform: translateX(-100%);
         }
-        li {
+        > li {
+          border-bottom: 2px solid #f6f9fc;
+          &:last-child {
+            border-bottom: none;
+          }
+          &:has(.mobile-submenu) {
+            a {
+              padding-bottom: 10px;
+            }
+          }
+
           @for $i from 1 through 10 {
             &:nth-child(#{$i}) {
               a {
@@ -330,6 +344,19 @@ import Footer from '../components/Footer.astro'
             }
           }
         }
+        .mobile-submenu {
+          ul {
+            padding-left: 15px;
+            list-style: none;
+            // li {
+            //   border-top: 1px solid var(--orange);
+            // }
+            a {
+              font-size: 0.875rem;
+              padding: 10px;
+            }
+          }
+        }
         &.active {
           left: 0;
           a {
@@ -337,6 +364,10 @@ import Footer from '../components/Footer.astro'
             transform: translateX(0);
           }
         }
+      }
+      @media (max-width: 34.375rem) {
+        left: -70vw;
+        width: 70vw;
       }
     }
   }
