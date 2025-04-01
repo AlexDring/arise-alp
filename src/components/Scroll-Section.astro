@@ -5,26 +5,28 @@ const { blok } = Astro.props
 ---
 
 <section class="full-width" {...storyblokEditable(blok)}>
-  <div class="scroll-section__text">
-    <h2>{blok.heading}</h2>
-    <p>{blok.content}</p>
-  </div>
-  <div class="scroll-section">
-    <div class="scroll-section__sticky-wrapper">
-      <div class="scroll-section__container">
-        {
-          blok.scroll_item.map((item) => (
-            <div class="scroll-section__item">
-              <img src={item.image.filename} alt={item.image.alt} />
-              <div class="scroll-section__item-content">
-                <p class="scroll-section__item-title">{item.title}</p>
-                <p class="scroll-section__item-description">
-                  {item.description}
-                </p>
+  <div class="scroll-section-wrapper">
+    <div class="scroll-section__text">
+      <h2>{blok.heading}</h2>
+      <p>{blok.content}</p>
+    </div>
+    <div class="scroll-section">
+      <div class="scroll-section__sticky-wrapper">
+        <div class="scroll-section__container">
+          {
+            blok.scroll_item.map((item) => (
+              <div class="scroll-section__item">
+                <img src={item.image.filename} alt={item.image.alt} />
+                <div class="scroll-section__item-content">
+                  <p class="scroll-section__item-title">{item.title}</p>
+                  <p class="scroll-section__item-description">
+                    {item.description}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))
-        }
+            ))
+          }
+        </div>
       </div>
     </div>
   </div>
@@ -34,6 +36,10 @@ const { blok } = Astro.props
   .full-width {
     overflow: clip;
     padding: 100px 0;
+  }
+  .scroll-section-wrapper {
+    overflow: visible;
+    scroll-behavior: smooth;
   }
   .scroll-section {
     padding: 60px 0;
@@ -103,13 +109,19 @@ const { blok } = Astro.props
 
 <script>
   const windowWidth = window.innerWidth
-  const offSetWidth = windowWidth - 1170
+
+  const offSetWidth = windowWidth > 1170 ? windowWidth - 1170 : 0
+
+  // set the margin left to the off set width / 2
+  document.querySelector('.scroll-section-wrapper').style.marginLeft =
+    `${offSetWidth / 2}px`
+
   const scrollSectionLength =
     document.querySelector('.scroll-section__container').scrollWidth +
-    offSetWidth +
-    100
+    offSetWidth
   const distanceFromTop = document.querySelector('.scroll-section').offsetTop
-  const scrollDistance = distanceFromTop + scrollSectionLength - windowWidth
+  const scrollDistance =
+    distanceFromTop + scrollSectionLength - windowWidth + 30
 
   const sectionHeight = scrollSectionLength - windowWidth
 
