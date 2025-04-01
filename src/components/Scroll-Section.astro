@@ -7,7 +7,7 @@ const { blok } = Astro.props
 <section class="full-width" {...storyblokEditable(blok)}>
   <div class="scroll-section-wrapper">
     <div class="scroll-section__text">
-      <h2>{blok.heading}</h2>
+      <h3>{blok.heading}</h3>
       <p>{blok.content}</p>
     </div>
     <div class="scroll-section">
@@ -68,6 +68,9 @@ const { blok } = Astro.props
     padding: 15px 30px 15px 15px;
     margin-right: 30px;
     position: relative;
+    @media (max-width: 960px) {
+      height: 60vh;
+    }
     &:before {
       content: '';
       background: radial-gradient(
@@ -110,9 +113,17 @@ const { blok } = Astro.props
 <script>
   const windowWidth = window.innerWidth
 
-  const offSetWidth = windowWidth > 1170 ? windowWidth - 1170 : 0
+  const deviceWidth = windowWidth > 1170
 
-  // set the margin left to the off set width / 2
+  // Keep inline with content, not needed below 1170px
+  const offSetWidth = deviceWidth ? windowWidth - 1170 : 0
+
+  if (windowWidth < 1170) {
+    // This is needed becasue the text tries to fill the container
+    document.querySelector('.scroll-section__text').style.maxWidth =
+      `${windowWidth - 40}px`
+  }
+
   document.querySelector('.scroll-section-wrapper').style.marginLeft =
     `${offSetWidth / 2}px`
 
