@@ -27,9 +27,12 @@ export default defineConfig({
         highlighted: 'components/Highlighted',
         hero: 'components/Hero',
         banner: 'components/Banner',
-        hero_gallery: 'components/Hero-Gallery',
+        hero_gallery: 'components/HeroGallery',
         text: 'components/Text',
-        scroll_section: 'components/Scroll-Section'
+        scroll_section: 'components/ScrollSection',
+        news_minilist: 'components/News/NewsMinilist',
+        news: 'components/News/News',
+        update: 'components/News/Update',
       }
     })
   ],

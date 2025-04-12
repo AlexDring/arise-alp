@@ -1,0 +1,91 @@
+---
+import { storyblokEditable, renderRichText } from '@storyblok/astro'
+const { blok } = Astro.props
+const renderedRichText = renderRichText(blok.content)
+---
+
+<article class="content-grid" {...storyblokEditable(blok)}>
+  <img
+    class="news-image"
+    alt={blok.image.alt}
+    src={`${blok.image.filename}/m/1024x430`}
+  />
+  <div class="news-content">
+    <header>
+      <a class="back-link" href="/news-updates">See all news/updates</a>
+      <time class="published-date"
+        >Posted on
+        {
+          new Date(blok.date).toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+          })
+        }
+      </time>
+      <h1>
+        {blok.title}
+      </h1>
+    </header>
+    <hr />
+    <div set:html={renderedRichText} />
+  </div>
+</article>
+
+<script define:vars={{ blok }}>
+  // Now blok is available directly in this script scope
+  console.log('Client side log:', blok)
+</script>
+
+<style>
+  .news-image {
+    object-fit: cover;
+    max-height: 31.25rem;
+    width: 100%;
+    margin-top: 7.5rem;
+    border-radius: var(--border-rad-sm);
+  }
+  .news-content {
+    padding: 2rem 4rem;
+    background: radial-gradient(
+        150% 150% at 0% 0%,
+        rgba(255, 166, 158, 0.4) 0%,
+        rgba(255, 166, 158, 0) 25%
+      ),
+      radial-gradient(
+        150% 150% at 100% 0%,
+        rgba(32, 87, 224, 0.2) 0%,
+        rgba(255, 255, 255, 0.15) 25%
+      ),
+      #fff;
+    max-width: 56rem;
+    margin-inline: auto;
+    margin-top: -5rem;
+  }
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  h1 {
+    margin-top: 15px;
+    margin-bottom: 30px;
+    font-size: 2.25rem;
+  }
+  hr {
+    margin-left: -4rem;
+    margin-right: -4rem;
+    margin-bottom: 30px;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #bfc1c9;
+  }
+  .back-link {
+    display: inline-block;
+    text-decoration: none;
+    align-self: flex-start;
+    font-size: 0.875rem;
+    margin-bottom: 30px;
+    margin-left: -2rem;
+  }
+</style>

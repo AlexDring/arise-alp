@@ -1,0 +1,57 @@
+---
+const { article } = Astro.props
+---
+
+<article>
+  <!-- {JSON.stringify(article)} -->
+  <time class="published-date">
+    Posted on <br />
+    {
+      new Date(article.content.date).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      })
+    }
+  </time>
+  <div class="content-wrapper">
+    <h3>{article.content.title}</h3>
+    <div class="content">
+      {article.content.content}
+    </div>
+  </div>
+  <div class="image-wrapper">
+    <img
+      src={`${article.content.image.filename}/m/238x100`}
+      alt={article.content.image.alt}
+    />
+  </div>
+</article>
+
+<style>
+  article {
+    display: grid;
+    grid: auto / 1fr 2fr 1fr;
+    grid-template-areas: 'date content image';
+    margin-bottom: 2rem;
+  }
+  .content-wrapper {
+    grid-area: content;
+    border-left: 1px solid var(--light-gray);
+    padding-left: 1rem;
+    padding-right: 4rem;
+  }
+  .published-date {
+    grid-area: date;
+    border-left: 1px solid var(--light-gray);
+    padding-left: 1rem;
+  }
+  .image-wrapper {
+    grid-area: image;
+    border-left: 1px solid var(--light-gray);
+    padding-left: 1rem;
+  }
+  img {
+    border-radius: var(--border-rad-sm);
+  }
+</style>

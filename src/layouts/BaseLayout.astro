@@ -36,6 +36,7 @@ import Footer from '../components/Footer.astro'
 <style is:global lang="scss">
   :root {
     --text-color: #212427dd;
+    --light-gray: #f4f4f7;
     --orange: #ffa69e;
     --blue: #2057e0;
     --light-blue: #b8f3ff;
@@ -147,19 +148,19 @@ import Footer from '../components/Footer.astro'
 
   h1 {
     /* font-size: 4.58333333rem; */
-    font-size: clamp(2.5rem, 5vw, 3.4375rem);
+    font-size: clamp(2.5rem, 5vw, 3rem);
   }
   h2 {
-    font-size: clamp(2.5rem, 5vw, 3.2rem);
+    font-size: clamp(2rem, 5vw, 2.25rem);
     margin-bottom: 2.1875rem;
   }
 
   h3 {
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(1.3rem, 4vw, 1.5rem);
   }
 
   h4 {
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-size: clamp(1.2rem, 3vw, 1.4rem);
   }
   main {
     /* max-width: 1170px; */
@@ -195,6 +196,12 @@ import Footer from '../components/Footer.astro'
         grid-column: full-width;
       }
     }
+  }
+  .published-date {
+    font-size: 0.875rem;
+    color: #808187;
+    font-weight: 500;
+    // text-transform: uppercase;
   }
   .subheading {
     font-size: clamp(1rem, 2vw, 1.25rem);
