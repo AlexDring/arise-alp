@@ -1,5 +1,15 @@
 ---
+// console.log(article.content.content, 'adsads')
+
+import {
+  storyblokEditable,
+  renderRichText,
+  useStoryblokApi
+} from '@storyblok/astro'
+// const { blok } = Astro.props
 const { article } = Astro.props
+const storyblokApi = useStoryblokApi()
+const renderedRichText = renderRichText(article.content.content)
 ---
 
 <article>
@@ -16,9 +26,10 @@ const { article } = Astro.props
   </time>
   <div class="content-wrapper">
     <h3>{article.content.title}</h3>
-    <div class="content">
+    <!-- <div class="content">
       {article.content.content}
-    </div>
+    </div> -->
+    <div class="content" set:html={renderedRichText} />
   </div>
   <div class="image-wrapper">
     <img

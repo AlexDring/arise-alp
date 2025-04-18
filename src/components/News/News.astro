@@ -1,6 +1,11 @@
 ---
-import { storyblokEditable, renderRichText } from '@storyblok/astro'
+import {
+  storyblokEditable,
+  renderRichText,
+  useStoryblokApi
+} from '@storyblok/astro'
 const { blok } = Astro.props
+const storyblokApi = useStoryblokApi()
 const renderedRichText = renderRichText(blok.content)
 ---
 
@@ -78,7 +83,7 @@ const renderedRichText = renderRichText(blok.content)
     margin-bottom: 30px;
     height: 1px;
     border: 0;
-    border-top: 1px solid #bfc1c9;
+    border-top: 1px solid var(--light-gray);
   }
   .back-link {
     display: inline-block;

@@ -30,6 +30,7 @@ export default defineConfig({
         hero_gallery: 'components/HeroGallery',
         text: 'components/Text',
         scroll_section: 'components/ScrollSection',
+        all_news: 'components/News/AllNews',
         news_minilist: 'components/News/NewsMinilist',
         news: 'components/News/News',
         update: 'components/News/Update',

@@ -1,9 +1,14 @@
 ---
 import { Image } from 'astro:assets'
 
-import { storyblokEditable, renderRichText } from '@storyblok/astro'
+import {
+  storyblokEditable,
+  renderRichText,
+  useStoryblokApi
+} from '@storyblok/astro'
 
 const { blok } = Astro.props
+const storyblokApi = useStoryblokApi()
 const content = renderRichText(blok.content)
 ---
 
