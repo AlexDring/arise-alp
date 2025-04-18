@@ -34,6 +34,7 @@ export default defineConfig({
         news_minilist: 'components/News/NewsMinilist',
         news: 'components/News/News',
         update: 'components/News/Update',
+        all_team_members: 'components/AllTeamMembers' 
       }
     })
   ],

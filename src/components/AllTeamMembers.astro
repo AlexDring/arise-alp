@@ -1,0 +1,108 @@
+---
+import { storyblokEditable } from '@storyblok/astro'
+
+const { blok } = Astro.props
+console.log(blok, 'blok')
+---
+
+<section {...storyblokEditable(blok)}>
+  <header>
+    <h1>Meet the team</h1>
+    <p
+      >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.</p
+    >
+  </header>
+  <div class="team-members">
+    {
+      blok.all_team?.map((member) => {
+        return (
+          <div class="team-member">
+            <img src={member.image.filename} alt={member.image.alt} />
+            <div class="team-member__content">
+              <p class="team-member__name">{member.name}</p>
+              <p class="team-member__job">{member.job}</p>
+              <p class="team-member__description">{member.description}</p>
+            </div>
+          </div>
+        )
+      })
+    }
+  </div>
+</section>
+
+<style>
+  section {
+    position: relative;
+    margin-top: 7.5rem;
+    margin-bottom: 5.625rem;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: calc(100% + 5.625rem);
+      z-index: -1;
+      width: 80%;
+      background: radial-gradient(
+          66.86% 62.92% at 34.61% 46.08%,
+          rgba(255, 166, 158, 0.3) 0%,
+          rgba(255, 166, 158, 0) 100%
+        ),
+        radial-gradient(
+          235.27% 59.43% at 92.5% 3.53%,
+          rgba(32, 87, 224, 0.11) 0%,
+          rgba(255, 255, 255, 0.15) 100%
+        ),
+        #fff;
+      @media (max-width: 50rem) {
+        width: 100%;
+      }
+    }
+  }
+  header {
+    margin-top: 5.625rem;
+    max-width: 35.625rem;
+    text-align: center;
+    margin-inline: auto;
+    margin-bottom: 3.75rem;
+  }
+  .team-members {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20.625rem, 1fr));
+    gap: 30px;
+    @media (max-width: 50rem) {
+      margin-inline: 1.25rem;
+    }
+  }
+  .team-member {
+    background-color: #fff;
+    box-shadow: var(--drop-shadow);
+    /* border-radius: var(--border-rad-sm); */
+    padding: 7px;
+    z-index: 1;
+    img {
+      max-height: 16.25rem;
+      border-radius: var(--border-rad-sm);
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  .team-member__name {
+    font-size: 1.3125rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  .team-member__job {
+    margin-bottom: 10px;
+  }
+  .team-member__content {
+    padding: 1.25rem 10px;
+    text-align: center;
+  }
+  .team-member__description {
+    margin-bottom: 0;
+  }
+</style>
