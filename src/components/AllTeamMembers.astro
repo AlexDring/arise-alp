@@ -18,7 +18,10 @@ console.log(blok, 'blok')
       blok.all_team?.map((member) => {
         return (
           <div class="team-member">
-            <img src={member.image.filename} alt={member.image.alt} />
+            <img
+              src={`${member.image.filename}/m/356x260`}
+              alt={member.image.alt}
+            />
             <div class="team-member__content">
               <p class="team-member__name">{member.name}</p>
               <p class="team-member__job">{member.job}</p>
@@ -84,7 +87,7 @@ console.log(blok, 'blok')
     padding: 7px;
     z-index: 1;
     img {
-      max-height: 16.25rem;
+      height: 16.25rem;
       border-radius: var(--border-rad-sm);
       width: 100%;
       object-fit: cover;
