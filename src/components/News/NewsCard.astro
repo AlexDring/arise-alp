@@ -2,8 +2,6 @@
 const { article } = Astro.props
 ---
 
-{console.log('NewsCard article:', article)}
-
 <article>
   <a title={article.content.title} href={`/news-updates/${article.slug}`}>
     <!-- {article.content.component} -->
@@ -14,10 +12,10 @@ const { article } = Astro.props
     <div class="news-card-content">
       <time class="published-date">
         {
-          new Date(article.content.date).toLocaleDateString('en-GB', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
+          new Date(article.content.date).toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
           })
         }
       </time>

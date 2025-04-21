@@ -1,9 +1,4 @@
 ---
-import { Image } from "astro:assets"
-
-import logo from "../media/arise-logo.png"
-// const currentPath = Astro.url.pathname
-
 import Menu from "./Menu.astro"
 
 import { useStoryblokApi } from "@storyblok/astro"
@@ -19,7 +14,10 @@ const headerMenu = data?.story?.content?.header_menu
 
 <div class="nav-bar at-top" class="full-width">
   <div>
-    <Image src={logo} alt="Arise ALP logo" />
+    <img
+      src="https://a.storyblok.com/f/321954/5000x2141/34d500aa43/black-on-transparent.png/m/136x59/filters:format(webp)"
+      alt="Arise ALP logo"
+    />
   </div>
   <nav class="top">
     <button id="menu-toggle" aria-expanded="false" aria-controls="menu">
