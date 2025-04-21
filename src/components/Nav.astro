@@ -1,18 +1,18 @@
 ---
-import { Image } from 'astro:assets'
+import { Image } from "astro:assets"
 
-import logo from '../media/arise-logo.png'
+import logo from "../media/arise-logo.png"
 // const currentPath = Astro.url.pathname
 
-import Menu from './Menu.astro'
+import Menu from "./Menu.astro"
 
-import { useStoryblokApi } from '@storyblok/astro'
-import isPreview from '../utils/isPreview'
+import { useStoryblokApi } from "@storyblok/astro"
+import isPreview from "../utils/isPreview"
 
 const storyblokApi = useStoryblokApi()
-const { data } = await storyblokApi.get('cdn/stories/config', {
-  version: isPreview() ? 'draft' : 'published',
-  resolve_links: 'url'
+const { data } = await storyblokApi.get("cdn/stories/config", {
+  version: isPreview() ? "draft" : "published",
+  resolve_links: "story"
 })
 const headerMenu = data?.story?.content?.header_menu
 ---
@@ -63,14 +63,14 @@ const headerMenu = data?.story?.content?.header_menu
       </div>
       {
         headerMenu.map((item) => {
-          if (item.component === 'menu_dropdown_link') {
+          if (item.component === "menu_dropdown_link") {
             return (
               <li class="dropdown-trigger">
                 <a
                   href={
-                    item.link.story.url === '/'
-                      ? '/'
-                      : `/${item.link.story.url}`
+                    item.link.story.slug === "/"
+                      ? "/"
+                      : `/${item.link.story.slug}`
                   }
                 >
                   {item.link.story.name}
@@ -82,9 +82,9 @@ const headerMenu = data?.story?.content?.header_menu
                         <li>
                           <a
                             href={
-                              dropdownItem.link.story.url === '/'
-                                ? '/'
-                                : `/${dropdownItem.link.story.url}`
+                              dropdownItem.link.story.slug === "/"
+                                ? "/"
+                                : `/${dropdownItem.link.story.slug}`
                             }
                           >
                             {dropdownItem.link.story.name}
@@ -102,7 +102,9 @@ const headerMenu = data?.story?.content?.header_menu
             <li>
               <a
                 href={
-                  item.link.story.url === '/' ? '/' : `/${item.link.story.url}`
+                  item.link.story.slug === "home"
+                    ? "/"
+                    : `/${item.link.story.slug}`
                 }
               >
                 {item.link.story.name}
@@ -122,7 +124,7 @@ const headerMenu = data?.story?.content?.header_menu
   .dropdown-trigger.trigger-enter-active {
     position: relative;
     > a:before {
-      content: '';
+      content: "";
       position: absolute;
       top: 20px;
       left: 0;
@@ -201,32 +203,32 @@ const headerMenu = data?.story?.content?.header_menu
   }
 </style>
 <script>
-  const mobileMenu = document.getElementById('mobile-menu')
-  const menuToggle = document.getElementById('menu-toggle')
+  const mobileMenu = document.getElementById("mobile-menu")
+  const menuToggle = document.getElementById("menu-toggle")
 
-  menuToggle.addEventListener('click', () => {
-    mobileMenu.classList.toggle('active')
+  menuToggle.addEventListener("click", () => {
+    mobileMenu.classList.toggle("active")
     menuToggle.setAttribute(
-      'aria-expanded',
-      mobileMenu.classList.contains('active').toString()
+      "aria-expanded",
+      mobileMenu.classList.contains("active").toString()
     )
   })
 
   // Close menu when clicking outside
-  document.addEventListener('click', (event) => {
+  document.addEventListener("click", (event) => {
     const target = event.target
     if (!mobileMenu.contains(target) && !menuToggle.contains(target)) {
-      mobileMenu.classList.remove('active')
-      menuToggle.setAttribute('aria-expanded', 'false')
+      mobileMenu.classList.remove("active")
+      menuToggle.setAttribute("aria-expanded", "false")
     }
   })
 
   // Hide/show nav on scroll using requestAnimationFrame and throttling for better performance
   let lastScrollTop = 0
   let ticking = false
-  const nav = document.querySelector('.nav-bar')
+  const nav = document.querySelector(".nav-bar")
 
-  window.addEventListener('scroll', () => {
+  window.addEventListener("scroll", () => {
     // Only run if we're not already waiting for an animation frame
     if (!ticking) {
       // requestAnimationFrame syncs our DOM updates with the browser's render cycle
@@ -236,10 +238,10 @@ const headerMenu = data?.story?.content?.header_menu
 
         if (scrollTop > lastScrollTop && scrollTop > 100) {
           // Scrolling down & past initial 100px
-          nav.classList.add('hide')
+          nav.classList.add("hide")
         } else {
           // Scrolling up
-          nav.classList.remove('hide')
+          nav.classList.remove("hide")
         }
 
         lastScrollTop = scrollTop
@@ -251,20 +253,20 @@ const headerMenu = data?.story?.content?.header_menu
   })
 
   // dropdown menu
-  const triggers = document.querySelectorAll('.dropdown-trigger')
-  const background = document.querySelector('.dropdown-background')
-  const topNav = document.querySelector('.top')
+  const triggers = document.querySelectorAll(".dropdown-trigger")
+  const background = document.querySelector(".dropdown-background")
+  const topNav = document.querySelector(".top")
 
   function handleEnter() {
-    this.classList.add('trigger-enter')
+    this.classList.add("trigger-enter")
     setTimeout(() => {
-      if (this.classList.contains('trigger-enter')) {
-        this.classList.add('trigger-enter-active')
+      if (this.classList.contains("trigger-enter")) {
+        this.classList.add("trigger-enter-active")
       }
     }, 150)
-    background.classList.add('open')
+    background.classList.add("open")
 
-    const dropdown = this.querySelector('.dropdown-content')
+    const dropdown = this.querySelector(".dropdown-content")
     const dropdownCoords = dropdown.getBoundingClientRect()
     const navCoords = topNav.getBoundingClientRect()
     console.log(dropdownCoords)
@@ -275,23 +277,23 @@ const headerMenu = data?.story?.content?.header_menu
       top: dropdownCoords.top - navCoords.top,
       left: dropdownCoords.left - navCoords.left
     }
-    background.style.setProperty('width', `${coords.width}px`)
-    background.style.setProperty('height', `${coords.height}px`)
+    background.style.setProperty("width", `${coords.width}px`)
+    background.style.setProperty("height", `${coords.height}px`)
     background.style.setProperty(
-      'transform',
+      "transform",
       `translate(${coords.left}px, ${coords.top}px)`
     )
   }
 
   function handleLeave() {
-    this.classList.remove('trigger-enter', 'trigger-enter-active')
-    background.classList.remove('open')
+    this.classList.remove("trigger-enter", "trigger-enter-active")
+    background.classList.remove("open")
   }
 
   triggers.forEach((trigger) =>
-    trigger.addEventListener('mouseenter', handleEnter)
+    trigger.addEventListener("mouseenter", handleEnter)
   )
   triggers.forEach((trigger) =>
-    trigger.addEventListener('mouseleave', handleLeave)
+    trigger.addEventListener("mouseleave", handleLeave)
   )
 </script>

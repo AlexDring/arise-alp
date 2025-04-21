@@ -4,33 +4,40 @@ const { menuItems, id: idName, ...rest } = Astro.props
 
 <ul id={idName} {...rest}>
   {
-    menuItems.map((item) => (
-      <li>
-        <a href={item.link.story.url === '/' ? '/' : `/${item.link.story.url}`}>
-          {item.link.story.name}
-        </a>
-        {item.dropdown_menu && (
-          <div class="mobile-submenu">
-            <ul>
-              {item.dropdown_menu.map((dropdownItem) => {
-                return (
-                  <li>
-                    <a
-                      href={
-                        dropdownItem.link.story.url === '/'
-                          ? '/'
-                          : `/${dropdownItem.link.story.url}`
-                      }
-                    >
-                      {dropdownItem.link.story.name}
-                    </a>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        )}
-      </li>
-    ))
+    menuItems.map((item) => {
+      console.log(item, "asdasd")
+      return (
+        <li>
+          <a
+            href={
+              item.link.story.slug === "/" ? "/" : `/${item.link.story.slug}`
+            }
+          >
+            {item.link.story.name}
+          </a>
+          {item.dropdown_menu && (
+            <div class="mobile-submenu">
+              <ul>
+                {item.dropdown_menu.map((dropdownItem) => {
+                  return (
+                    <li>
+                      <a
+                        href={
+                          dropdownItem.link.story.slug === "/"
+                            ? "/"
+                            : `/${dropdownItem.link.story.slug}`
+                        }
+                      >
+                        {dropdownItem.link.story.name}
+                      </a>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          )}
+        </li>
+      )
+    })
   }
 </ul>
