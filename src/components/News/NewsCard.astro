@@ -6,7 +6,7 @@ const { article } = Astro.props
   <a title={article.content.title} href={`/news-updates/${article.slug}`}>
     <!-- {article.content.component} -->
     <img
-      src={`${article.content.image.filename}/m/555x277`}
+      src={`${article.content.image.filename}/m/555x277/filters:format(webp)`}
       alt={article.content.image.alt}
     />
     <div class="news-card-content">

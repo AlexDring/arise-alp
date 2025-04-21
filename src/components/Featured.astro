@@ -1,11 +1,9 @@
 ---
-import { Image } from 'astro:assets'
-
 import {
   storyblokEditable,
   renderRichText,
   useStoryblokApi
-} from '@storyblok/astro'
+} from "@storyblok/astro"
 
 const { blok } = Astro.props
 const storyblokApi = useStoryblokApi()
@@ -14,7 +12,10 @@ const content = renderRichText(blok.content)
 
 <section class="featured" {...storyblokEditable(blok)}>
   <div class="featured__image">
-    <Image inferSize={true} src={blok.image.filename} alt={blok.image.alt} />
+    <img
+      src={`${blok.image.filename}/m/442x0/filters:format(webp)`}
+      alt={blok.image.alt}
+    />
   </div>
   <div class="featured__text">
     <header>

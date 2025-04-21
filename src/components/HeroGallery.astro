@@ -19,10 +19,9 @@ const nextThreeImages = images.slice(2, 5) // Adjust slice range if there are fe
     <div class="gallery-grid__grid">
       {
         nextThreeImages.map((image) => (
-          <Image
-            src={image.filename}
+          <img
+            src={`${image.filename}/m/275x0/filters:format(webp)`}
             alt={image.alt || "Image"}
-            inferSize={true}
           />
         ))
       }
@@ -31,10 +30,9 @@ const nextThreeImages = images.slice(2, 5) // Adjust slice range if there are fe
     <div class="gallery-grid__stacked">
       {
         firstTwoImages.map((image) => (
-          <Image
-            src={image.filename}
+          <img
+            src={`${image.filename}/m/573x0/filters:format(webp)`}
             alt={image.alt || "Image"}
-            inferSize={true}
           />
         ))
       }

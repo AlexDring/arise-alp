@@ -1,12 +1,12 @@
 ---
 import {
   storyblokEditable,
-  renderRichText,
-  useStoryblokApi
+  renderRichText
+  // useStoryblokApi
 } from "@storyblok/astro"
 
 const { blok } = Astro.props
-const storyblokApi = useStoryblokApi()
+// const storyblokApi = useStoryblokApi()
 const content = renderRichText(blok.content)
 ---
 

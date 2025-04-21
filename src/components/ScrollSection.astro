@@ -1,5 +1,5 @@
 ---
-import { storyblokEditable } from '@storyblok/astro'
+import { storyblokEditable } from "@storyblok/astro"
 
 const { blok } = Astro.props
 ---
@@ -16,7 +16,10 @@ const { blok } = Astro.props
           {
             blok.scroll_item.map((item) => (
               <div class="scroll-section__item">
-                <img src={item.image.filename} alt={item.image.alt} />
+                <img
+                  src={`${item.image.filename}/m/320x0/filters:format(webp)`}
+                  alt={item.image.alt}
+                />
                 <div class="scroll-section__item-content">
                   <p class="scroll-section__item-title">{item.title}</p>
                   <p class="scroll-section__item-description">
@@ -72,7 +75,7 @@ const { blok } = Astro.props
       height: 60vh;
     }
     &:before {
-      content: '';
+      content: "";
       background: radial-gradient(
         circle at 20% 100%,
         rgb(26 26 26 / 80%) 0%,
@@ -120,33 +123,33 @@ const { blok } = Astro.props
 
   if (windowWidth < 1170) {
     // This is needed becasue the text tries to fill the container
-    document.querySelector('.scroll-section__text').style.maxWidth =
+    document.querySelector(".scroll-section__text").style.maxWidth =
       `${windowWidth - 40}px`
   }
 
-  document.querySelector('.scroll-section-wrapper').style.marginLeft =
+  document.querySelector(".scroll-section-wrapper").style.marginLeft =
     `${offSetWidth / 2 - 20}px`
 
   const scrollSectionLength =
-    document.querySelector('.scroll-section__container').scrollWidth +
+    document.querySelector(".scroll-section__container").scrollWidth +
     offSetWidth
-  const distanceFromTop = document.querySelector('.scroll-section').offsetTop
+  const distanceFromTop = document.querySelector(".scroll-section").offsetTop
   const scrollDistance =
     distanceFromTop + scrollSectionLength - windowWidth + 30
 
   const sectionHeight = scrollSectionLength - windowWidth
 
-  document.querySelector('.scroll-section').style.height =
+  document.querySelector(".scroll-section").style.height =
     `${900 + sectionHeight}px`
   // document.querySelector('.scroll-section__sticky-wrapper').style.marginLeft =
   //   `${offSetWidth / 2}px`
 
-  window.addEventListener('scroll', function () {
+  window.addEventListener("scroll", function () {
     const scrollTop = window.pageYOffset
     if (scrollTop >= distanceFromTop && scrollTop <= scrollDistance) {
       {
         this.document.querySelector(
-          '.scroll-section__sticky-wrapper'
+          ".scroll-section__sticky-wrapper"
         ).style.transform = `translateX(-${scrollTop - distanceFromTop}px)`
       }
     }

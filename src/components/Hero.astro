@@ -1,13 +1,15 @@
 ---
-import { Image } from 'astro:assets'
-
-import { storyblokEditable } from '@storyblok/astro'
+import { storyblokEditable } from "@storyblok/astro"
 
 const { blok } = Astro.props
 ---
 
 <section class="full-width" {...storyblokEditable(blok)}>
-  <Image inferSize={true} src={blok.image.filename} alt={blok.image.alt} />
+  <img
+    src={`${blok.image.filename}/m/1440x0/filters:format(webp)`}
+    alt={blok.image.alt}
+  />
+  <!-- <Image inferSize={true} src={blok.image.filename} alt={blok.image.alt} /> -->
   <div>
     <h1>{blok.heading}</h1>
     <p>{blok.content}</p>

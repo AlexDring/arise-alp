@@ -1,8 +1,8 @@
 ---
-import { storyblokEditable } from '@storyblok/astro'
+import { storyblokEditable } from "@storyblok/astro"
 
 const { blok } = Astro.props
-console.log(blok, 'blok')
+console.log(blok, "blok")
 ---
 
 <section {...storyblokEditable(blok)}>
@@ -19,7 +19,7 @@ console.log(blok, 'blok')
         return (
           <div class="team-member">
             <img
-              src={`${member.image.filename}/m/356x260`}
+              src={`${member.image.filename}/m/356x260/filters:format(webp)`}
               alt={member.image.alt}
             />
             <div class="team-member__content">
@@ -41,7 +41,7 @@ console.log(blok, 'blok')
     margin-bottom: 5.625rem;
 
     &:before {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 50%;
