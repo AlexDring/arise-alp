@@ -4,47 +4,72 @@ import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
 import isPreview from "../utils/isPreview"
 
+console.log("[...slug].astro - Start of file execution")
+
 // Don't prerender in SSR mode
 export const prerender = isPreview() ? false : true
+console.log("[...slug].astro - Prerender value:", prerender)
 
 export async function getStaticPaths() {
+  console.log("[...slug].astro - Starting getStaticPaths")
   const storyblokApi = useStoryblokApi()
-  const links = await storyblokApi.getAll("cdn/links", {
-    version: isPreview() ? "draft" : "published"
-  })
+  console.log("[...slug].astro - Got Storyblok API instance")
 
-  // Filter out system paths and only return valid Storyblok routes
-  console.log(links)
-  return links
-    .filter((link) => !link.is_folder)
-    .map((link) => {
-      return {
-        params: {
-          slug: link.slug === "home" ? undefined : link.slug
-        }
-      }
+  try {
+    const links = await storyblokApi.getAll("cdn/links", {
+      version: isPreview() ? "draft" : "published"
     })
+    console.log("[...slug].astro - Fetched links:", links.length)
+
+    // Filter out system paths and only return valid Storyblok routes
+    const paths = links
+      .filter((link) => !link.is_folder)
+      .map((link) => {
+        return {
+          params: {
+            slug: link.slug === "home" ? undefined : link.slug
+          }
+        }
+      })
+    console.log("[...slug].astro - Processed paths count:", paths.length)
+    return paths
+  } catch (error) {
+    console.error("[...slug].astro - Error in getStaticPaths:", error)
+    throw error
+  }
 }
+
+console.log("[...slug].astro - After getStaticPaths declaration")
 
 // Add a check for system paths
 const { slug } = Astro.params
-console.log("Current slug:", slug)
+console.log("[...slug].astro - Current slug:", slug)
 
 // Create a safe path for the API request
 const path = !slug ? "home" : slug
+console.log("[...slug].astro - Resolved path:", path)
 
 // Skip processing for system paths, this was throwing a 404 not found error in preview mode
 if (slug && slug.startsWith(".well-known/")) {
+  console.log("[...slug].astro - Redirecting .well-known path")
   return Astro.redirect("/404")
 }
 
+console.log("[...slug].astro - About to make Storyblok API call")
 const storyblokApi = useStoryblokApi()
+let story
 
-const { data } = await storyblokApi.get(`cdn/stories/${path}`, {
-  version: isPreview() ? "draft" : "published"
-})
-
-const story = data.story
+try {
+  console.log(`[...slug].astro - Fetching story for path: ${path}`)
+  const { data } = await storyblokApi.get(`cdn/stories/${path}`, {
+    version: isPreview() ? "draft" : "published"
+  })
+  console.log("[...slug].astro - Successfully fetched story data")
+  story = data.story
+} catch (error) {
+  console.error("[...slug].astro - Error fetching story:", error)
+  throw error
+}
 ---
 
 <BaseLayout>
