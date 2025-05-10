@@ -1,9 +1,12 @@
 ---
 const { article } = Astro.props
+
+// Safely access the slug with a fallback
+const articleSlug = article?.slug || article?.content?.slug || ""
 ---
 
 <article>
-  <a title={article.content.title} href={`/news-updates/${article.slug}`}>
+  <a title={article.content.title} href={`/news-updates/${articleSlug}`}>
     <!-- {article.content.component} -->
     <img
       src={`${article.content.image.filename}/m/555x277/filters:format(webp)`}

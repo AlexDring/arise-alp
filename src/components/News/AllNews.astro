@@ -16,6 +16,20 @@ const news = allNews.filter((article) => article.content.component === "news")
 const updates = allNews.filter(
   (article) => article.content.component === "update"
 )
+
+// Safe processing of articles to ensure slug is available
+const processArticle = (article) => {
+  // Clone article to avoid modifying the original
+  const processedArticle = { ...article }
+  // Safely assign slug if it exists
+  if (article?.slug) {
+    processedArticle.content = {
+      ...processedArticle.content,
+      slug: article.slug
+    }
+  }
+  return processedArticle
+}
 ---
 
 <section {...storyblokEditable(blok)}>
@@ -23,28 +37,22 @@ const updates = allNews.filter(
   <ul>
     {
       updates?.length &&
-        updates.map((article) => {
-          article.content.slug = article.slug
-          return (
-            <li>
-              <Update article={article} />
-            </li>
-          )
-        })
+        updates.map((article) => (
+          <li>
+            <Update article={processArticle(article)} />
+          </li>
+        ))
     }
   </ul>
   {news?.length && <h2 class="updates-title">News</h2>}
   <ul class="news-list">
     {
       news?.length &&
-        news.map((article) => {
-          article.content.slug = article.slug
-          return (
-            <li>
-              <NewsCard article={article} />
-            </li>
-          )
-        })
+        news.map((article) => (
+          <li>
+            <NewsCard article={processArticle(article)} />
+          </li>
+        ))
     }
   </ul>
 </section>

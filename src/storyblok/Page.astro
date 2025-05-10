@@ -1,8 +1,9 @@
 ---
-import { storyblokEditable } from '@storyblok/astro'
-import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
+import { storyblokEditable } from "@storyblok/astro"
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
 
 const { blok } = Astro.props
+console.log(blok, "page")
 ---
 
 <main class="content-grid" {...storyblokEditable(blok)}>
