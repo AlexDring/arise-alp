@@ -1,13 +1,10 @@
 ---
-import {
-  storyblokEditable,
-  renderRichText
-  // useStoryblokApi
-} from "@storyblok/astro"
+import { storyblokEditable } from "@storyblok/astro"
+import { renderRichTextWithButtons } from "../utils/richTextBlockRenderer"
 
 const { blok } = Astro.props
-// const storyblokApi = useStoryblokApi()
-const content = renderRichText(blok.content)
+
+const content = renderRichTextWithButtons(blok.content)
 ---
 
 <section class="full-width" {...storyblokEditable(blok)}>
