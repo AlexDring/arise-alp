@@ -1,15 +1,13 @@
 ---
 import { Image } from "astro:assets"
 
-import {
-  storyblokEditable,
-  renderRichText,
-  useStoryblokApi
-} from "@storyblok/astro"
+import { storyblokEditable, useStoryblokApi } from "@storyblok/astro"
+import { renderRichTextRenderer } from "../utils/richTextRenderer"
 
 const { blok } = Astro.props
 const storyblokApi = useStoryblokApi()
-const content = renderRichText(blok.content)
+
+const content = renderRichTextRenderer(blok.content)
 ---
 
 <section {...storyblokEditable(blok)} class="observe toggle">

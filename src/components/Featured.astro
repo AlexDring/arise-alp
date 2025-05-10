@@ -1,10 +1,8 @@
 ---
 import { storyblokEditable } from "@storyblok/astro"
-import { renderRichTextWithButtons } from "../utils/richTextBlockRenderer"
-
+import { renderRichTextRenderer } from "../utils/richTextRenderer"
 const { blok } = Astro.props
-
-const content = renderRichTextWithButtons(blok.content)
+const content = renderRichTextRenderer(blok.content)
 ---
 
 <section class="featured" {...storyblokEditable(blok)}>

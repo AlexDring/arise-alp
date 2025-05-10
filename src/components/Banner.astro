@@ -1,10 +1,10 @@
 ---
 import { storyblokEditable } from "@storyblok/astro"
-import { renderRichTextWithButtons } from "../utils/richTextBlockRenderer"
+import { renderRichTextRenderer } from "../utils/richTextRenderer"
 
 const { blok } = Astro.props
 
-const content = renderRichTextWithButtons(blok.content)
+const content = renderRichTextRenderer(blok.content)
 ---
 
 <section class="full-width" {...storyblokEditable(blok)}>
@@ -28,5 +28,8 @@ const content = renderRichTextWithButtons(blok.content)
         rgba(32, 87, 224, 0.6) 0%,
         rgba(255, 255, 255, 0.85) 100%
       );
+  }
+  div {
+    max-width: 90ch;
   }
 </style>
