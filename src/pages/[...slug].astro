@@ -58,6 +58,7 @@ if (slug && slug.startsWith(".well-known/")) {
 console.log("[...slug].astro - About to make Storyblok API call")
 const storyblokApi = useStoryblokApi()
 let story
+let storyContent
 
 try {
   console.log(`[...slug].astro - Fetching story for path: ${path}`)
@@ -66,6 +67,19 @@ try {
   })
   console.log("[...slug].astro - Successfully fetched story data")
   story = data.story
+  storyContent = story?.content || {}
+
+  // Debug the story object
+  console.log(
+    "[...slug].astro - Story object structure:",
+    JSON.stringify({
+      id: story?.id,
+      name: story?.name,
+      slug: story?.slug,
+      full_slug: story?.full_slug,
+      content_type: story?.content?.component
+    })
+  )
 } catch (error) {
   console.error("[...slug].astro - Error fetching story:", error)
   throw error
@@ -73,5 +87,5 @@ try {
 ---
 
 <BaseLayout>
-  <StoryblokComponent blok={story.content} />
+  {storyContent && <StoryblokComponent blok={storyContent} />}
 </BaseLayout>
