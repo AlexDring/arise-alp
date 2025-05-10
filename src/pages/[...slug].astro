@@ -28,8 +28,10 @@ export async function getStaticPaths() {
 // Add a check for system paths
 const { slug } = Astro.params
 
-// Skip processing for system paths, this was throwing a 404 not found error in preview mode
-if (slug?.startsWith(".well-known/")) {
+// Handle undefined slug and system paths
+if (!slug) {
+  // Continue processing for home page
+} else if (slug.startsWith(".well-known/")) {
   return Astro.redirect("/404")
 }
 
