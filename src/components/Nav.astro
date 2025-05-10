@@ -72,6 +72,7 @@ const headerMenu = data?.story?.content?.header_menu
                   }
                 >
                   {item.link.story.name}
+                  <span class="dropdown-arrow" />
                 </a>
                 <div class="dropdown-content">
                   <ul>
@@ -151,6 +152,7 @@ const headerMenu = data?.story?.content?.header_menu
       opacity: 1;
     }
   }
+
   .arrow {
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
     box-shadow: var(--drop-shadow);
@@ -169,6 +171,17 @@ const headerMenu = data?.story?.content?.header_menu
   }
   .dropdown-trigger {
     position: relative;
+    a {
+      padding-right: 30px !important;
+    }
+    .dropdown-arrow:after {
+      content: url("../assets/chevron-down-solid-blue.svg");
+      position: absolute;
+      width: 13px;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+    }
   }
   .dropdown-content {
     opacity: 0;

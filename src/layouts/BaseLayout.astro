@@ -357,6 +357,20 @@ import Footer from "../components/Footer.astro"
           color: #fff;
         }
       }
+      .dropdown-trigger {
+        position: relative;
+        a {
+          padding-right: 30px;
+        }
+        .dropdown-arrow:after {
+          content: url("../assets/chevron-down-solid-blue.svg");
+          position: absolute;
+          width: 13px;
+          top: 50%;
+          right: 10px;
+          transform: translateY(-50%);
+        }
+      }
     }
     .mobile-menu-wrapper #mobile-menu {
       display: none;
