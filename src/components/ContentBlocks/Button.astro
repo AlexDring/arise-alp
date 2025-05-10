@@ -1,0 +1,10 @@
+---
+import { storyblokEditable } from "@storyblok/astro"
+
+const { blok } = Astro.props
+console.log(blok)
+---
+
+<a href={blok.button_link.cached_url} class="cta" {...storyblokEditable(blok)}>
+  {blok.button_name}
+</a>
