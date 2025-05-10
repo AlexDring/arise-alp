@@ -13,15 +13,18 @@ export async function getStaticPaths() {
     version: isPreview() ? "draft" : "published"
   })
 
-  // Return all valid Storyblok routes, including folders
-  return links.map((link) => {
-    console.log(link)
-    return {
-      params: {
-        slug: link.slug === "home" ? undefined : link.slug
+  // Filter out system paths and only return valid Storyblok routes
+  console.log(links)
+  return links
+    .filter((link) => !link.is_folder)
+    .map((link) => {
+      console.log(link)
+      return {
+        params: {
+          slug: link.slug === "home" ? undefined : link.slug
+        }
       }
-    }
-  })
+    })
 }
 
 // Add a check for system paths
