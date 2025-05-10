@@ -10,25 +10,21 @@ export const prerender = isPreview() ? false : true
 export async function getStaticPaths() {
   const storyblokApi = useStoryblokApi()
   const links = await storyblokApi.getAll("cdn/links", {
-    // version: isPreview() ? "draft" : "published"
-    version: "published"
+    version: isPreview() ? "draft" : "published"
   })
 
-  // Filter out system paths and only return valid Storyblok routes
-  return links
-    .filter((link) => !link.is_folder)
-    .map((link) => ({
+  // Return all valid Storyblok routes, including folders
+  return links.map((link) => {
+    return {
       params: {
-        slug: link.slug.split("/")
+        slug: link.slug === "home" ? undefined : link.slug
       }
-    }))
+    }
+  })
 }
 
 // Add a check for system paths
-// const { slug } = Astro.params
-const slug = Array.isArray(Astro.params.slug)
-  ? Astro.params.slug.join("/")
-  : Astro.params.slug
+const { slug } = Astro.params
 
 // Skip processing for system paths, this was throwing a 404 not found error in preview mode
 if (slug?.startsWith(".well-known/")) {
@@ -37,10 +33,12 @@ if (slug?.startsWith(".well-known/")) {
 
 const storyblokApi = useStoryblokApi()
 
-const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
-  // version: isPreview() ? "draft" : "published"
-  version: "published"
-})
+const { data } = await storyblokApi.get(
+  `cdn/stories/${slug === undefined ? "home" : slug}`,
+  {
+    version: isPreview() ? "draft" : "published"
+  }
+)
 
 const story = data.story
 ---
