@@ -7,7 +7,7 @@ const env = loadEnv('', process.cwd(), 'STORYBLOK')
 
 // https://astro.build/config
 export default defineConfig({
-  output: env.STORYBLOK_IS_PREVIEW === 'yes' ? 'server' : 'static',
+  output: env.STORYBLOK_IS_PREVIEW === 'yes' ? 'server' : 'hydrid',
   ...(env.STORYBLOK_IS_PREVIEW === 'yes' && {
     adapter: netlify({
       imageCDN: false
