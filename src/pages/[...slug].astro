@@ -18,15 +18,9 @@ export async function getStaticPaths() {
   return links
     .filter((link) => !link.is_folder)
     .map((link) => {
-      console.log(link)
-      // Remove trailing slash from slug if present
-      const cleanSlug = link.slug.endsWith("/")
-        ? link.slug.slice(0, -1)
-        : link.slug
-
       return {
         params: {
-          slug: cleanSlug === "home" ? undefined : cleanSlug
+          slug: link.slug === "home" ? undefined : link.slug
         }
       }
     })
@@ -34,21 +28,21 @@ export async function getStaticPaths() {
 
 // Add a check for system paths
 const { slug } = Astro.params
-console.log(slug)
+console.log("Current slug:", slug)
+
+// Create a safe path for the API request
+const path = !slug ? "home" : slug
 
 // Skip processing for system paths, this was throwing a 404 not found error in preview mode
-if (slug?.startsWith(".well-known/")) {
+if (slug && slug.startsWith(".well-known/")) {
   return Astro.redirect("/404")
 }
 
 const storyblokApi = useStoryblokApi()
 
-const { data } = await storyblokApi.get(
-  `cdn/stories/${slug === undefined ? "home" : slug}`,
-  {
-    version: isPreview() ? "draft" : "published"
-  }
-)
+const { data } = await storyblokApi.get(`cdn/stories/${path}`, {
+  version: isPreview() ? "draft" : "published"
+})
 
 const story = data.story
 ---
