@@ -10,7 +10,8 @@ export const prerender = isPreview() ? false : true
 export async function getStaticPaths() {
   const storyblokApi = useStoryblokApi()
   const links = await storyblokApi.getAll("cdn/links", {
-    version: isPreview() ? "draft" : "published"
+    // version: isPreview() ? "draft" : "published"
+    version: "published"
   })
 
   // Filter out system paths and only return valid Storyblok routes
@@ -28,10 +29,8 @@ export async function getStaticPaths() {
 // Add a check for system paths
 const { slug } = Astro.params
 
-// Handle undefined slug and system paths
-if (!slug) {
-  // Continue processing for home page
-} else if (slug.startsWith(".well-known/")) {
+// Skip processing for system paths, this was throwing a 404 not found error in preview mode
+if (slug?.startsWith(".well-known/")) {
   return Astro.redirect("/404")
 }
 
@@ -40,7 +39,8 @@ const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get(
   `cdn/stories/${slug === undefined ? "home" : slug}`,
   {
-    version: isPreview() ? "draft" : "published"
+    // version: isPreview() ? "draft" : "published"
+    version: "published"
   }
 )
 
