@@ -17,17 +17,18 @@ export async function getStaticPaths() {
   // Filter out system paths and only return valid Storyblok routes
   return links
     .filter((link) => !link.is_folder)
-    .map((link) => {
-      return {
-        params: {
-          slug: link.slug
-        }
+    .map((link) => ({
+      params: {
+        slug: link.slug.split("/")
       }
-    })
+    }))
 }
 
 // Add a check for system paths
-const { slug } = Astro.params
+// const { slug } = Astro.params
+const slug = Array.isArray(Astro.params.slug)
+  ? Astro.params.slug.join("/")
+  : Astro.params.slug
 
 // Skip processing for system paths, this was throwing a 404 not found error in preview mode
 if (slug?.startsWith(".well-known/")) {
