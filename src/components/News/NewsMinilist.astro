@@ -1,20 +1,20 @@
 ---
-import { storyblokEditable, useStoryblokApi } from '@storyblok/astro'
-import NewsCard from '../News/NewsCard.astro'
-import Update from '../News/Update.astro'
+import { storyblokEditable, useStoryblokApi } from "@storyblok/astro"
+import NewsCard from "../News/NewsCard.astro"
+import Update from "../News/Update.astro"
 const { blok } = Astro.props
 
 const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get(`cdn/stories`, {
-  version: 'draft', // or 'published'
-  starts_with: 'news-updates/',
+  version: "draft", // or 'published'
+  starts_with: "news-updates/",
   is_startpage: 0
 })
 
 const allNews = data.stories
-const news = allNews.filter((article) => article.content.component === 'news')
+const news = allNews.filter((article) => article.content.component === "news")
 const updates = allNews.filter(
-  (article) => article.content.component === 'update'
+  (article) => article.content.component === "update"
 )
 ---
 
@@ -57,14 +57,17 @@ const updates = allNews.filter(
   }
   .news-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(35.5625rem, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
+    @media (max-width: 34.375rem) {
+      grid-template-columns: 1fr;
+    }
   }
   .updates-title {
     border-left: 1px solid var(--light-gray);
     padding-left: 1rem;
     color: var(--blue);
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     text-transform: uppercase;
     font-size: 1rem;
     font-weight: 600;

@@ -8,21 +8,22 @@ import {
 } from "@storyblok/astro"
 // const { blok } = Astro.props
 const { article } = Astro.props
-const storyblokApi = useStoryblokApi()
+// const storyblokApi = useStoryblokApi()
 const renderedRichText = renderRichText(article.content.content)
 ---
 
 <article>
   <!-- {JSON.stringify(article)} -->
   <time class="published-date">
-    Posted on <br />
-    {
-      new Date(article.content.date).toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-      })
-    }
+    Posted on <span>
+      {
+        new Date(article.content.date).toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "long",
+          year: "numeric"
+        })
+      }
+    </span>
   </time>
   <div class="content-wrapper">
     <h3>{article.content.title}</h3>
@@ -45,17 +46,31 @@ const renderedRichText = renderRichText(article.content.content)
     grid: auto / 1fr 2fr 1fr;
     grid-template-areas: "date content image";
     margin-bottom: 2rem;
+    @media (max-width: 34.375rem) {
+      grid-template-columns: 1fr;
+      grid-template-areas: "date" "image" "content";
+      row-gap: 1rem;
+    }
   }
   .content-wrapper {
     grid-area: content;
     border-left: 1px solid var(--light-gray);
     padding-left: 1rem;
     padding-right: 4rem;
+    @media (max-width: 34.375rem) {
+      padding-right: 0;
+    }
   }
   .published-date {
     grid-area: date;
     border-left: 1px solid var(--light-gray);
     padding-left: 1rem;
+    span {
+      display: block;
+      @media (max-width: 34.375rem) {
+        display: inline;
+      }
+    }
   }
   .image-wrapper {
     grid-area: image;
