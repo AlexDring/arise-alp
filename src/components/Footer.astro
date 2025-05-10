@@ -1,5 +1,17 @@
 ---
+import { useStoryblokApi } from "@storyblok/astro"
+import isPreview from "../utils/isPreview"
 
+const storyblokApi = useStoryblokApi()
+const { data } = await storyblokApi.get("cdn/stories/config", {
+  version: isPreview() ? "draft" : "published",
+  resolve_links: "story"
+})
+const footerMenu1 = data?.story?.content?.footer_menu_1
+const footerMenu2 = data?.story?.content?.footer_menu_2
+
+console.log(footerMenu1)
+console.log(footerMenu2)
 ---
 
 <div class="content-grid wrapper">
@@ -69,37 +81,35 @@
           src="https://a.storyblok.com/f/321954/5000x2141/34d500aa43/black-on-transparent.png/m/136x59/filters:format(webp)"
           alt="Arise ALP logo"
         />
-        <p
-          >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        <p>
+          Email:
+          <a href="mailto:jwright@arisealp.co.uk">jwright@arisealp.co.uk</a>
+          <br />
+          Phone: <a href="tel:07511568953">07511568953</a>
         </p>
       </div>
       <div class="footer-menu">
         <p class="subheading">Menu</p>
         <ul>
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a href="/about">About</a>
-          </li>
-          <li>
-            <a href="/contact">Contact</a>
-          </li>
+          {
+            footerMenu1.map((item) => (
+              <li>
+                <a href={item.link.story.full_slug}>{item.link.story.name}</a>
+              </li>
+            ))
+          }
         </ul>
       </div>
       <div class="legal-menu">
         <p class="subheading">Legal</p>
         <ul>
-          <li>
-            <a href="/cookies">Cookies</a>
-          </li>
-          <li>
-            <a href="/privacy-policy">Privacy policy</a>
-          </li>
-          <li>
-            <a href="/documents">Documents</a>
-          </li>
+          {
+            footerMenu2.map((item) => (
+              <li>
+                <a href={item.link.story.full_slug}>{item.link.story.name}</a>
+              </li>
+            ))
+          }
         </ul>
       </div>
     </div>
@@ -156,6 +166,9 @@
         display: block;
         color: var(--text-color);
         margin-bottom: 15px;
+        &:hover {
+          text-decoration: none;
+        }
       }
     }
   }

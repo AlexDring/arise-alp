@@ -1,8 +1,11 @@
 ---
 import { storyblokEditable } from "@storyblok/astro"
 import { Image } from "astro:assets"
+import { renderRichTextRenderer } from "../utils/richTextRenderer"
 
 const { blok } = Astro.props
+
+const content = renderRichTextRenderer(blok.text)
 
 const images = blok.images
 
@@ -13,8 +16,8 @@ const nextThreeImages = images.slice(2, 5) // Adjust slice range if there are fe
 <section class="full-width observe" {...storyblokEditable(blok)}>
   <div class="gallery-grid">
     <div class="gallery-grid__text">
-      <h1>{blok.heading}</h1>
-      <p>{blok.content}</p>
+      <!-- <h1>{blok.heading}</h1> -->
+      <Fragment set:html={content} />
     </div>
     <div class="gallery-grid__grid">
       {
@@ -88,7 +91,7 @@ const nextThreeImages = images.slice(2, 5) // Adjust slice range if there are fe
   }
   .gallery-grid__text {
     /* margin-bottom: var(--spacing-lg); */
-    margin-bottom: 140px;
+    margin-bottom: 55px;
     padding-inline: var(--spacing-md);
     p {
       font-size: 1.3125rem;
