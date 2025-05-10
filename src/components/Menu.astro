@@ -5,7 +5,6 @@ const { menuItems, id: idName, ...rest } = Astro.props
 <ul id={idName} {...rest}>
   {
     menuItems.map((item) => {
-      console.log(item, "asdasd")
       return (
         <li>
           <a

@@ -3,7 +3,7 @@ import {
   storyblokEditable,
   renderRichText,
   useStoryblokApi
-} from '@storyblok/astro'
+} from "@storyblok/astro"
 const { blok } = Astro.props
 const storyblokApi = useStoryblokApi()
 const renderedRichText = renderRichText(blok.content)
@@ -21,10 +21,10 @@ const renderedRichText = renderRichText(blok.content)
       <time class="published-date"
         >Posted on
         {
-          new Date(blok.date).toLocaleDateString('en-GB', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
+          new Date(blok.date).toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
           })
         }
       </time>
@@ -39,7 +39,6 @@ const renderedRichText = renderRichText(blok.content)
 
 <script define:vars={{ blok }}>
   // Now blok is available directly in this script scope
-  console.log('Client side log:', blok)
 </script>
 
 <style>

@@ -14,7 +14,7 @@
     "@fontsource-variable/lora": "^5.0.17",
     "@fontsource/roboto": "^5.0.12",
     "@storyblok/astro": "^5.1.2",
-    "astro": "^5.7.4",
+    "astro": "^5.7.12",
     "vite": "^5.4.5"
   },
   "devDependencies": {

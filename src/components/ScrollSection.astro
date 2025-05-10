@@ -119,7 +119,7 @@ const { blok } = Astro.props
   const deviceWidth = windowWidth > 1170
 
   // Keep inline with content, not needed below 1170px
-  const offSetWidth = deviceWidth ? windowWidth - 1170 : 0
+  const offSetWidth = deviceWidth ? windowWidth - 1170 : 20
 
   if (windowWidth < 1170) {
     // This is needed becasue the text tries to fill the container
@@ -127,8 +127,10 @@ const { blok } = Astro.props
       `${windowWidth - 40}px`
   }
 
+  let leftOffset = deviceWidth ? offSetWidth / 2 - 20 : 20
+
   document.querySelector(".scroll-section-wrapper").style.marginLeft =
-    `${offSetWidth / 2 - 20}px`
+    `${leftOffset}px`
 
   const scrollSectionLength =
     document.querySelector(".scroll-section__container").scrollWidth +
@@ -141,8 +143,6 @@ const { blok } = Astro.props
 
   document.querySelector(".scroll-section").style.height =
     `${900 + sectionHeight}px`
-  // document.querySelector('.scroll-section__sticky-wrapper').style.marginLeft =
-  //   `${offSetWidth / 2}px`
 
   window.addEventListener("scroll", function () {
     const scrollTop = window.pageYOffset
@@ -154,12 +154,4 @@ const { blok } = Astro.props
       }
     }
   })
-
-  // console.log(
-  //   { windowWidth },
-  //   { scrollSectionLength },
-  //   { distanceFromTop },
-  //   { scrollDistance },
-  //   { sectionHeight }
-  // )
 </script>

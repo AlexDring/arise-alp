@@ -1,37 +1,44 @@
 ---
-import { useStoryblokApi } from '@storyblok/astro'
-import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
-import BaseLayout from '../layouts/BaseLayout.astro'
-import isPreview from '../utils/isPreview'
+import { useStoryblokApi } from "@storyblok/astro"
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
+import BaseLayout from "../layouts/BaseLayout.astro"
+import isPreview from "../utils/isPreview"
 
 // Don't prerender in SSR mode
 export const prerender = isPreview() ? false : true
 
 export async function getStaticPaths() {
   const storyblokApi = useStoryblokApi()
-  const links = await storyblokApi.getAll('cdn/links', {
-    version: isPreview() ? 'draft' : 'published'
+  const links = await storyblokApi.getAll("cdn/links", {
+    version: isPreview() ? "draft" : "published"
   })
 
+  // Filter out system paths and only return valid Storyblok routes
   return links
     .filter((link) => !link.is_folder)
     .map((link) => {
       return {
         params: {
-          slug: link.slug === 'home' ? undefined : link.slug
+          slug: link.slug === "home" ? undefined : link.slug
         }
       }
     })
 }
 
+// Add a check for system paths
 const { slug } = Astro.params
+
+// Skip processing for system paths, this was throwing a 404 not found error in preview mode
+if (slug?.startsWith(".well-known/")) {
+  return Astro.redirect("/404")
+}
 
 const storyblokApi = useStoryblokApi()
 
 const { data } = await storyblokApi.get(
-  `cdn/stories/${slug === undefined ? 'home' : slug}`,
+  `cdn/stories/${slug === undefined ? "home" : slug}`,
   {
-    version: isPreview() ? 'draft' : 'published'
+    version: isPreview() ? "draft" : "published"
   }
 )
 
