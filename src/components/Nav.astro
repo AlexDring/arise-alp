@@ -7,7 +7,7 @@ import isPreview from "../utils/isPreview"
 const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get("cdn/stories/config", {
   version: isPreview() ? "draft" : "published",
-  resolve_links: "story"
+  resolve_links: "url"
 })
 const headerMenu = data?.story?.content?.header_menu
 ---
@@ -64,8 +64,14 @@ const headerMenu = data?.story?.content?.header_menu
           if (item.component === "menu_dropdown_link") {
             return (
               <li class="dropdown-trigger">
-                <a href={item.slug === "/" ? "/" : `/${item.slug}`}>
-                  {item.name}
+                <a
+                  href={
+                    item.link.cached_url === "/"
+                      ? "/"
+                      : `/${item.link.cached_url}`
+                  }
+                >
+                  {item.link.story.name}
                   <span class="dropdown-arrow" />
                 </a>
                 <div class="dropdown-content">
@@ -75,12 +81,12 @@ const headerMenu = data?.story?.content?.header_menu
                         <li>
                           <a
                             href={
-                              dropdownItem.slug === "/"
+                              dropdownItem.link.cached_url === "/"
                                 ? "/"
-                                : `/${dropdownItem.slug}`
+                                : `/${dropdownItem.link.cached_url}`
                             }
                           >
-                            {dropdownItem.name}
+                            {dropdownItem.link.story.name}
                           </a>
                         </li>
                       )
@@ -93,8 +99,14 @@ const headerMenu = data?.story?.content?.header_menu
 
           return (
             <li>
-              <a href={item.slug === "home" ? "/" : `/${item.slug}`}>
-                {item.name}
+              <a
+                href={
+                  item.link.cached_url === "home"
+                    ? "/"
+                    : `/${item.link.cached_url}`
+                }
+              >
+                {item.link.story.name}
               </a>
             </li>
           )

@@ -2,51 +2,41 @@
 import { storyblokEditable, useStoryblokApi } from "@storyblok/astro"
 import NewsCard from "../News/NewsCard.astro"
 import Update from "../News/Update.astro"
+import isPreview from "../../utils/isPreview"
+
 const { blok } = Astro.props
 
 const storyblokApi = useStoryblokApi()
-let allNews = []
-let news = []
-let updates = []
+const { data } = await storyblokApi.get(`cdn/stories`, {
+  version: isPreview() ? "draft" : "published",
+  starts_with: "news-updates/",
+  is_startpage: 0
+})
 
-try {
-  const { data } = await storyblokApi.get(`cdn/stories`, {
-    version: "published",
-    starts_with: "news-updates/",
-    is_startpage: 0
-  })
+const allNews = data.stories
 
-  allNews = data?.stories || []
-  news = allNews.filter((article) => article?.content?.component === "news")
-  updates = allNews.filter(
-    (article) => article?.content?.component === "update"
-  )
-} catch (error) {
-  console.error("Error fetching news:", error)
-}
-
-console.log(updates, "updates in all news")
+const news = allNews.filter((article) => article.content.component === "news")
+const updates = allNews.filter(
+  (article) => article.content.component === "update"
+)
 ---
 
 <section {...storyblokEditable(blok)}>
-  {updates?.length > 0 && <h2 class="updates-title">Updates</h2>}
+  {updates?.length && <h2 class="updates-title">Updates</h2>}
   <ul>
     {
-      updates?.length > 0 &&
-        updates.map((article) => {
-          console.log(article, "article in updates map")
-          return (
-            <li>
-              <Update article={article} />
-            </li>
-          )
-        })
+      updates?.length &&
+        updates.map((article) => (
+          <li>
+            <Update article={article} />
+          </li>
+        ))
     }
   </ul>
-  {news?.length > 0 && <h2 class="updates-title">News</h2>}
+  {news?.length && <h2 class="updates-title">News</h2>}
   <ul class="news-list">
     {
-      news?.length > 0 &&
+      news?.length &&
         news.map((article) => (
           <li>
             <NewsCard article={article} />
