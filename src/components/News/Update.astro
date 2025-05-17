@@ -1,15 +1,17 @@
 ---
-// console.log(article.content.content, 'adsads')
-
-import {
-  storyblokEditable,
-  renderRichText,
-  useStoryblokApi
-} from "@storyblok/astro"
+import { storyblokEditable, renderRichText } from "@storyblok/astro"
 // const { blok } = Astro.props
 const { article } = Astro.props
-// const storyblokApi = useStoryblokApi()
-const renderedRichText = renderRichText(article.content.content)
+
+// Add defensive checks
+if (!article || !article.content) {
+  return null
+}
+
+const { date, title, image } = article.content
+console.log(article, "here")
+// console.log(article.content.content, "here here")
+const renderedRichText = renderRichText(article?.content?.content)
 ---
 
 <article>
@@ -17,27 +19,30 @@ const renderedRichText = renderRichText(article.content.content)
   <time class="published-date">
     Posted on <span>
       {
-        new Date(article.content.date).toLocaleDateString("en-GB", {
-          day: "numeric",
-          month: "long",
-          year: "numeric"
-        })
+        date
+          ? new Date(date).toLocaleDateString("en-GB", {
+              day: "numeric",
+              month: "long",
+              year: "numeric"
+            })
+          : ""
       }
     </span>
   </time>
   <div class="content-wrapper">
-    <h3>{article.content.title}</h3>
-    <!-- <div class="content">
-      {article.content.content}
-    </div> -->
+    <h3>{title || ""}</h3>
     <div class="content" set:html={renderedRichText} />
   </div>
-  <div class="image-wrapper">
-    <img
-      src={`${article.content.image.filename}/m/238x100/filters:format(webp)`}
-      alt={article.content.image.alt}
-    />
-  </div>
+  {
+    image && (
+      <div class="image-wrapper">
+        <img
+          src={`${image.filename}/m/238x100/filters:format(webp)`}
+          alt={image.alt || ""}
+        />
+      </div>
+    )
+  }
 </article>
 
 <style>

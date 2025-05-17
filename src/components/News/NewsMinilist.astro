@@ -6,7 +6,7 @@ const { blok } = Astro.props
 
 const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get(`cdn/stories`, {
-  version: "draft", // or 'published'
+  version: "published", // or 'published'
   starts_with: "news-updates/",
   is_startpage: 0
 })
@@ -16,20 +16,6 @@ const news = allNews.filter((article) => article.content.component === "news")
 const updates = allNews.filter(
   (article) => article.content.component === "update"
 )
-
-// Safe processing of articles to ensure slug is available
-const processArticle = (article) => {
-  // Clone article to avoid modifying the original
-  const processedArticle = { ...article }
-  // Safely assign slug if it exists
-  if (article?.slug) {
-    processedArticle.content = {
-      ...processedArticle.content,
-      slug: article.slug
-    }
-  }
-  return processedArticle
-}
 ---
 
 <section {...storyblokEditable(blok)}>
@@ -39,7 +25,7 @@ const processArticle = (article) => {
       updates?.length &&
         updates.map((article) => (
           <li>
-            <Update article={processArticle(article)} />
+            <Update article={article} />
           </li>
         ))
     }
@@ -50,7 +36,7 @@ const processArticle = (article) => {
       news?.length &&
         news.map((article) => (
           <li>
-            <NewsCard article={processArticle(article)} />
+            <NewsCard article={article} />
           </li>
         ))
     }

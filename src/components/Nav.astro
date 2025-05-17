@@ -64,14 +64,8 @@ const headerMenu = data?.story?.content?.header_menu
           if (item.component === "menu_dropdown_link") {
             return (
               <li class="dropdown-trigger">
-                <a
-                  href={
-                    item.link.story.slug === "/"
-                      ? "/"
-                      : `/${item.link.story.slug}`
-                  }
-                >
-                  {item.link.story.name}
+                <a href={item.slug === "/" ? "/" : `/${item.slug}`}>
+                  {item.name}
                   <span class="dropdown-arrow" />
                 </a>
                 <div class="dropdown-content">
@@ -81,12 +75,12 @@ const headerMenu = data?.story?.content?.header_menu
                         <li>
                           <a
                             href={
-                              dropdownItem.link.story.slug === "/"
+                              dropdownItem.slug === "/"
                                 ? "/"
-                                : `/${dropdownItem.link.story.slug}`
+                                : `/${dropdownItem.slug}`
                             }
                           >
-                            {dropdownItem.link.story.name}
+                            {dropdownItem.name}
                           </a>
                         </li>
                       )
@@ -99,14 +93,8 @@ const headerMenu = data?.story?.content?.header_menu
 
           return (
             <li>
-              <a
-                href={
-                  item.link.story.slug === "home"
-                    ? "/"
-                    : `/${item.link.story.slug}`
-                }
-              >
-                {item.link.story.name}
+              <a href={item.slug === "home" ? "/" : `/${item.slug}`}>
+                {item.name}
               </a>
             </li>
           )
