@@ -7,7 +7,13 @@ const { menuItems, id: idName, ...rest } = Astro.props
     menuItems.map((item) => {
       return (
         <li>
-          <a href={item.slug === "/" ? "/" : `/${item.slug}`}>{item.name}</a>
+          <a
+            href={
+              item.link.cached_url === "/" ? "/" : `/${item.link.cached_url}`
+            }
+          >
+            {item.link.story.name}
+          </a>
           {item.dropdown_menu && (
             <div class="mobile-submenu">
               <ul>
@@ -16,12 +22,12 @@ const { menuItems, id: idName, ...rest } = Astro.props
                     <li>
                       <a
                         href={
-                          dropdownItem.slug === "/"
+                          dropdownItem.link.cached_url === "/"
                             ? "/"
-                            : `/${dropdownItem.slug}`
+                            : `/${dropdownItem.link.cached_url}`
                         }
                       >
-                        {dropdownItem.name}
+                        {dropdownItem.link.story.name}
                       </a>
                     </li>
                   )
