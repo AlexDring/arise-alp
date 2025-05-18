@@ -49,7 +49,7 @@ const articleSlug = article?.slug || article?.content?.slug || ""
     &:visited {
       color: inherit;
     }
-    &:focus,
+    &:focus-visible,
     &:hover {
       .news-card-content {
         transform: translateY(-35px);
@@ -58,6 +58,22 @@ const articleSlug = article?.slug || article?.content?.slug || ""
         opacity: 1;
         /* height: 20px; */
         bottom: 20px;
+      }
+    }
+    &:focus-visible {
+      outline: 3px red solid;
+      outline-offset: 3px;
+
+      .read-more,
+      .news-card-content {
+        color: #0b0c0c;
+        background-color: #fd0;
+        a,
+        time,
+        h3,
+        p {
+          color: #0b0c0c;
+        }
       }
     }
   }
