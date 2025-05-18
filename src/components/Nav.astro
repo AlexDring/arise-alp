@@ -204,21 +204,42 @@ const headerMenu = data?.story?.content?.header_menu
   const mobileMenu = document.getElementById("mobile-menu")
   const menuToggle = document.getElementById("menu-toggle")
 
-  menuToggle.addEventListener("click", () => {
+  function handleMobileMenuOpen() {
     mobileMenu.classList.toggle("active")
     menuToggle.setAttribute(
       "aria-expanded",
       mobileMenu.classList.contains("active").toString()
     )
+  }
+
+  function handleMobileMenuClose() {
+    mobileMenu.classList.remove("active")
+    menuToggle.setAttribute("aria-expanded", "false")
+  }
+
+  menuToggle.addEventListener("click", () => {
+    handleMobileMenuOpen()
   })
 
   // Close menu when clicking outside
   document.addEventListener("click", (event) => {
     const target = event.target
     if (!mobileMenu.contains(target) && !menuToggle.contains(target)) {
-      mobileMenu.classList.remove("active")
-      menuToggle.setAttribute("aria-expanded", "false")
+      handleMobileMenuClose()
     }
+  })
+
+  // Close mobile menu when focus moves outside
+  const mobileMenuLinks = mobileMenu.querySelectorAll("a")
+  mobileMenuLinks.forEach((link) => {
+    link.addEventListener("blur", (event) => {
+      // Check if the next focused element is outside the menu
+      const relatedTarget = event.relatedTarget
+      if (!mobileMenu.contains(relatedTarget)) {
+        mobileMenu.classList.remove("active")
+        menuToggle.setAttribute("aria-expanded", "false")
+      }
+    })
   })
 
   // Hide/show nav on scroll using requestAnimationFrame and throttling for better performance
@@ -282,15 +303,53 @@ const headerMenu = data?.story?.content?.header_menu
     )
   }
 
-  function handleLeave() {
+  function handleLeave(event) {
+    // Check if focus is still within the dropdown
+    const relatedTarget = event.relatedTarget
+    if (relatedTarget && this.contains(relatedTarget)) {
+      return // Don't close if focus is moving inside the dropdown
+    }
     this.classList.remove("trigger-enter", "trigger-enter-active")
     background.classList.remove("open")
   }
 
-  triggers.forEach((trigger) =>
+  triggers.forEach((trigger) => {
     trigger.addEventListener("mouseenter", handleEnter)
-  )
-  triggers.forEach((trigger) =>
     trigger.addEventListener("mouseleave", handleLeave)
-  )
+  })
+
+  triggers.forEach((trigger) => {
+    const triggerLink = trigger.querySelector("a")
+    const dropdownLinks = trigger.querySelectorAll(".dropdown-content a")
+
+    // Handle main trigger link
+    triggerLink.addEventListener("focus", () => handleEnter.call(trigger))
+    triggerLink.addEventListener("blur", (event) =>
+      handleLeave.call(trigger, event)
+    )
+
+    // Handle all links inside dropdown
+    dropdownLinks.forEach((link) => {
+      link.addEventListener("blur", (event) => handleLeave.call(trigger, event))
+    })
+  })
+
+  // Handle escape key
+  document.addEventListener("keydown", (event) => {
+    // Close open menu dropdowns
+    if (event.key === "Escape") {
+      // Find any open dropdown
+      const openTrigger = document.querySelector(".trigger-enter")
+      console.log(openTrigger)
+
+      if (openTrigger) {
+        openTrigger.classList.remove("trigger-enter", "trigger-enter-active")
+        background.classList.remove("open")
+      }
+      // Close the mobile menu if open
+      if (mobileMenu.classList.contains("active")) {
+        handleMobileMenuClose()
+      }
+    }
+  })
 </script>
