@@ -9,7 +9,7 @@ const { menuItems, id: idName, ...rest } = Astro.props
         <li>
           <a
             href={
-              item.link.cached_url === "/" ? "/" : `/${item.link.cached_url}`
+              item.link.cached_url === "home" ? "/" : `/${item.link.cached_url}`
             }
           >
             {item.link.story.name}
