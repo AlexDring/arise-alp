@@ -1,13 +1,13 @@
 ---
-import Menu from "./Menu.astro"
+import Menu from './Menu.astro'
 
-import { useStoryblokApi } from "@storyblok/astro"
-import isPreview from "../utils/isPreview"
+import { useStoryblokApi } from '@storyblok/astro'
+import isPreview from '../utils/isPreview'
 
 const storyblokApi = useStoryblokApi()
-const { data } = await storyblokApi.get("cdn/stories/config", {
-  version: isPreview() ? "draft" : "published",
-  resolve_links: "url"
+const { data } = await storyblokApi.get('cdn/stories/config', {
+  version: isPreview() ? 'draft' : 'published',
+  resolve_links: 'url'
 })
 const headerMenu = data?.story?.content?.header_menu
 ---
@@ -55,19 +55,19 @@ const headerMenu = data?.story?.content?.header_menu
       </svg>
     </button>
     <!-- <Menu menuItems={headerMenu} /> -->
+    <div class="dropdown-background">
+      <span class="arrow"></span>
+    </div>
     <ul id="menu">
-      <div class="dropdown-background">
-        <span class="arrow"></span>
-      </div>
       {
         headerMenu.map((item) => {
-          if (item.component === "menu_dropdown_link") {
+          if (item.component === 'menu_dropdown_link') {
             return (
               <li class="dropdown-trigger">
                 <a
                   href={
-                    item.link.cached_url === "/"
-                      ? "/"
+                    item.link.cached_url === '/'
+                      ? '/'
                       : `/${item.link.cached_url}`
                   }
                 >
@@ -81,8 +81,8 @@ const headerMenu = data?.story?.content?.header_menu
                         <li>
                           <a
                             href={
-                              dropdownItem.link.cached_url === "/"
-                                ? "/"
+                              dropdownItem.link.cached_url === '/'
+                                ? '/'
                                 : `/${dropdownItem.link.cached_url}`
                             }
                           >
@@ -101,8 +101,8 @@ const headerMenu = data?.story?.content?.header_menu
             <li>
               <a
                 href={
-                  item.link.cached_url === "home"
-                    ? "/"
+                  item.link.cached_url === 'home'
+                    ? '/'
                     : `/${item.link.cached_url}`
                 }
               >
@@ -123,7 +123,7 @@ const headerMenu = data?.story?.content?.header_menu
   .dropdown-trigger.trigger-enter-active {
     position: relative;
     > a:before {
-      content: "";
+      content: '';
       position: absolute;
       top: 20px;
       left: 0;
@@ -201,28 +201,28 @@ const headerMenu = data?.story?.content?.header_menu
   }
 </style>
 <script>
-  const mobileMenu = document.getElementById("mobile-menu")
-  const menuToggle = document.getElementById("menu-toggle")
+  const mobileMenu = document.getElementById('mobile-menu')
+  const menuToggle = document.getElementById('menu-toggle')
 
   function handleMobileMenuOpen() {
-    mobileMenu.classList.toggle("active")
+    mobileMenu.classList.toggle('active')
     menuToggle.setAttribute(
-      "aria-expanded",
-      mobileMenu.classList.contains("active").toString()
+      'aria-expanded',
+      mobileMenu.classList.contains('active').toString()
     )
   }
 
   function handleMobileMenuClose() {
-    mobileMenu.classList.remove("active")
-    menuToggle.setAttribute("aria-expanded", "false")
+    mobileMenu.classList.remove('active')
+    menuToggle.setAttribute('aria-expanded', 'false')
   }
 
-  menuToggle.addEventListener("click", () => {
+  menuToggle.addEventListener('click', () => {
     handleMobileMenuOpen()
   })
 
   // Close menu when clicking outside
-  document.addEventListener("click", (event) => {
+  document.addEventListener('click', (event) => {
     const target = event.target
     if (!mobileMenu.contains(target) && !menuToggle.contains(target)) {
       handleMobileMenuClose()
@@ -230,14 +230,14 @@ const headerMenu = data?.story?.content?.header_menu
   })
 
   // Close mobile menu when focus moves outside
-  const mobileMenuLinks = mobileMenu.querySelectorAll("a")
+  const mobileMenuLinks = mobileMenu.querySelectorAll('a')
   mobileMenuLinks.forEach((link) => {
-    link.addEventListener("blur", (event) => {
+    link.addEventListener('blur', (event) => {
       // Check if the next focused element is outside the menu
       const relatedTarget = event.relatedTarget
       if (!mobileMenu.contains(relatedTarget)) {
-        mobileMenu.classList.remove("active")
-        menuToggle.setAttribute("aria-expanded", "false")
+        mobileMenu.classList.remove('active')
+        menuToggle.setAttribute('aria-expanded', 'false')
       }
     })
   })
@@ -245,9 +245,9 @@ const headerMenu = data?.story?.content?.header_menu
   // Hide/show nav on scroll using requestAnimationFrame and throttling for better performance
   let lastScrollTop = 0
   let ticking = false
-  const nav = document.querySelector(".nav-bar")
+  const nav = document.querySelector('.nav-bar')
 
-  window.addEventListener("scroll", () => {
+  window.addEventListener('scroll', () => {
     // Only run if we're not already waiting for an animation frame
     if (!ticking) {
       // requestAnimationFrame syncs our DOM updates with the browser's render cycle
@@ -257,10 +257,10 @@ const headerMenu = data?.story?.content?.header_menu
 
         if (scrollTop > lastScrollTop && scrollTop > 100) {
           // Scrolling down & past initial 100px
-          nav.classList.add("hide")
+          nav.classList.add('hide')
         } else {
           // Scrolling up
-          nav.classList.remove("hide")
+          nav.classList.remove('hide')
         }
 
         lastScrollTop = scrollTop
@@ -272,20 +272,20 @@ const headerMenu = data?.story?.content?.header_menu
   })
 
   // dropdown menu
-  const triggers = document.querySelectorAll(".dropdown-trigger")
-  const background = document.querySelector(".dropdown-background")
-  const topNav = document.querySelector(".top")
+  const triggers = document.querySelectorAll('.dropdown-trigger')
+  const background = document.querySelector('.dropdown-background')
+  const topNav = document.querySelector('.top')
 
   function handleEnter() {
-    this.classList.add("trigger-enter")
+    this.classList.add('trigger-enter')
     setTimeout(() => {
-      if (this.classList.contains("trigger-enter")) {
-        this.classList.add("trigger-enter-active")
+      if (this.classList.contains('trigger-enter')) {
+        this.classList.add('trigger-enter-active')
       }
     }, 150)
-    background.classList.add("open")
+    background.classList.add('open')
 
-    const dropdown = this.querySelector(".dropdown-content")
+    const dropdown = this.querySelector('.dropdown-content')
     const dropdownCoords = dropdown.getBoundingClientRect()
     const navCoords = topNav.getBoundingClientRect()
 
@@ -295,10 +295,10 @@ const headerMenu = data?.story?.content?.header_menu
       top: dropdownCoords.top - navCoords.top,
       left: dropdownCoords.left - navCoords.left
     }
-    background.style.setProperty("width", `${coords.width}px`)
-    background.style.setProperty("height", `${coords.height}px`)
+    background.style.setProperty('width', `${coords.width}px`)
+    background.style.setProperty('height', `${coords.height}px`)
     background.style.setProperty(
-      "transform",
+      'transform',
       `translate(${coords.left}px, ${coords.top}px)`
     )
   }
@@ -309,45 +309,45 @@ const headerMenu = data?.story?.content?.header_menu
     if (relatedTarget && this.contains(relatedTarget)) {
       return // Don't close if focus is moving inside the dropdown
     }
-    this.classList.remove("trigger-enter", "trigger-enter-active")
-    background.classList.remove("open")
+    this.classList.remove('trigger-enter', 'trigger-enter-active')
+    background.classList.remove('open')
   }
 
   triggers.forEach((trigger) => {
-    trigger.addEventListener("mouseenter", handleEnter)
-    trigger.addEventListener("mouseleave", handleLeave)
+    trigger.addEventListener('mouseenter', handleEnter)
+    trigger.addEventListener('mouseleave', handleLeave)
   })
 
   triggers.forEach((trigger) => {
-    const triggerLink = trigger.querySelector("a")
-    const dropdownLinks = trigger.querySelectorAll(".dropdown-content a")
+    const triggerLink = trigger.querySelector('a')
+    const dropdownLinks = trigger.querySelectorAll('.dropdown-content a')
 
     // Handle main trigger link
-    triggerLink.addEventListener("focus", () => handleEnter.call(trigger))
-    triggerLink.addEventListener("blur", (event) =>
+    triggerLink.addEventListener('focus', () => handleEnter.call(trigger))
+    triggerLink.addEventListener('blur', (event) =>
       handleLeave.call(trigger, event)
     )
 
     // Handle all links inside dropdown
     dropdownLinks.forEach((link) => {
-      link.addEventListener("blur", (event) => handleLeave.call(trigger, event))
+      link.addEventListener('blur', (event) => handleLeave.call(trigger, event))
     })
   })
 
   // Handle escape key
-  document.addEventListener("keydown", (event) => {
+  document.addEventListener('keydown', (event) => {
     // Close open menu dropdowns
-    if (event.key === "Escape") {
+    if (event.key === 'Escape') {
       // Find any open dropdown
-      const openTrigger = document.querySelector(".trigger-enter")
+      const openTrigger = document.querySelector('.trigger-enter')
       console.log(openTrigger)
 
       if (openTrigger) {
-        openTrigger.classList.remove("trigger-enter", "trigger-enter-active")
-        background.classList.remove("open")
+        openTrigger.classList.remove('trigger-enter', 'trigger-enter-active')
+        background.classList.remove('open')
       }
       // Close the mobile menu if open
-      if (mobileMenu.classList.contains("active")) {
+      if (mobileMenu.classList.contains('active')) {
         handleMobileMenuClose()
       }
     }
