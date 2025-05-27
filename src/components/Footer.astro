@@ -9,6 +9,7 @@ const { data } = await storyblokApi.get('cdn/stories/config', {
 })
 const footerMenu1 = data?.story?.content?.footer_menu_1
 const footerMenu2 = data?.story?.content?.footer_menu_2
+const siteUrl = import.meta.env.SITE
 ---
 
 <div class="content-grid wrapper">
@@ -92,7 +93,15 @@ const footerMenu2 = data?.story?.content?.footer_menu_2
           {
             footerMenu1.map((item) => (
               <li>
-                <a href={item.link.cached_url}>{item.link.story.name}</a>
+                <a
+                  href={
+                    isPreview()
+                      ? `/${item.link.story.full_slug}`
+                      : `${siteUrl}/${item.link.cached_url}`
+                  }
+                >
+                  {item.link.story.name}
+                </a>
               </li>
             ))
           }
@@ -104,7 +113,15 @@ const footerMenu2 = data?.story?.content?.footer_menu_2
           {
             footerMenu2.map((item) => (
               <li>
-                <a href={item.link.cached_url}>{item.link.story.name}</a>
+                <a
+                  href={
+                    isPreview()
+                      ? `/${item.link.story.full_slug}`
+                      : `${siteUrl}/${item.link.cached_url}`
+                  }
+                >
+                  {item.link.story.name}
+                </a>
               </li>
             ))
           }
