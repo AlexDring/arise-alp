@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config'
 import basicSsl from '@vitejs/plugin-basic-ssl'
 import storyblok from '@storyblok/astro'
 import netlify from '@astrojs/netlify'
+import sitemap from '@astrojs/sitemap'
 import { loadEnv } from 'vite'
 const env = loadEnv('', process.cwd(), 'STORYBLOK')
 
@@ -15,6 +16,7 @@ export default defineConfig({
     })
   }),
   integrations: [
+    sitemap(),
     storyblok({
       accessToken:
         env.STORYBLOK_IS_PREVIEW === 'yes'
