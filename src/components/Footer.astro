@@ -92,7 +92,7 @@ const footerMenu2 = data?.story?.content?.footer_menu_2
           {
             footerMenu1.map((item) => (
               <li>
-                <a href={item.link.story.full_slug}>{item.link.story.name}</a>
+                <a href={item.link.cached_url}>{item.link.story.name}</a>
               </li>
             ))
           }
@@ -104,7 +104,7 @@ const footerMenu2 = data?.story?.content?.footer_menu_2
           {
             footerMenu2.map((item) => (
               <li>
-                <a href={item.link.story.full_slug}>{item.link.story.name}</a>
+                <a href={item.link.cached_url}>{item.link.story.name}</a>
               </li>
             ))
           }
