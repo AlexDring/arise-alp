@@ -127,6 +127,9 @@ const footerMenu2 = data?.story?.content?.footer_menu_2
         rgba(32, 87, 224, 0.17) 0%,
         rgba(255, 255, 255, 0.25) 100%
       );
+    a {
+      color: var(--text-color);
+    }
     > div {
       padding-top: 190px;
       padding-bottom: 120px;
@@ -162,11 +165,7 @@ const footerMenu2 = data?.story?.content?.footer_menu_2
       padding: 0;
       a {
         display: block;
-        color: var(--text-color);
         margin-bottom: 15px;
-        &:hover {
-          text-decoration: none;
-        }
       }
     }
   }
