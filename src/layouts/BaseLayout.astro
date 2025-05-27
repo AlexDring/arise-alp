@@ -393,6 +393,12 @@ import Footer from '../components/Footer.astro'
           top: 50%;
           right: 10px;
           transform: translateY(-50%);
+          transition: transform 0.2s ease-out;
+        }
+        &.trigger-enter-active {
+          .dropdown-arrow:after {
+            transform: translateY(-50%) rotate(180deg);
+          }
         }
       }
     }
