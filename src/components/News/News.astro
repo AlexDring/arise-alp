@@ -1,5 +1,5 @@
 ---
-import { storyblokEditable, renderRichText } from "@storyblok/astro"
+import { storyblokEditable, renderRichText } from '@storyblok/astro'
 const { blok } = Astro.props
 const renderedRichText = renderRichText(blok.content)
 ---
@@ -16,10 +16,10 @@ const renderedRichText = renderRichText(blok.content)
       <time class="published-date"
         >Posted on
         {
-          new Date(blok.date).toLocaleDateString("en-GB", {
-            day: "numeric",
-            month: "long",
-            year: "numeric"
+          new Date(blok.date).toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
           })
         }
       </time>
@@ -87,10 +87,11 @@ const renderedRichText = renderRichText(blok.content)
     margin-bottom: 30px;
     margin-left: -2rem;
     border-radius: var(--border-rad-sm);
-    border: 1px solid #808187;
+    border: 1px solid var(--light-gray);
     padding: 5px 10px;
     text-decoration: none;
-    color: #808187;
+    color: #75767b;
+    background-color: #fff;
     &:hover {
       background-color: var(--blue);
       color: #fff;
