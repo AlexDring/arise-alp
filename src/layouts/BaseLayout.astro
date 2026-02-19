@@ -1,12 +1,12 @@
 ---
-import '@fontsource/roboto/400.css'
-import '@fontsource/roboto/500.css'
-import '@fontsource/roboto/700.css'
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 // Supports weights 400-700
-import '@fontsource-variable/lora'
+import "@fontsource-variable/lora";
 
-import Nav from '../components/Nav.astro'
-import Footer from '../components/Footer.astro'
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <!doctype html>
@@ -56,7 +56,7 @@ import Footer from '../components/Footer.astro'
     --spacing-lg: 72px;
 
     /** Font */
-    --font-heading: 'Lora Variable', serif;
+    --font-heading: "Lora Variable", serif;
   }
 
   /* Reset */
@@ -127,7 +127,7 @@ import Footer from '../components/Footer.astro'
   }
 
   body {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     color: var(--text-color);
   }
   p {
@@ -214,7 +214,7 @@ import Footer from '../components/Footer.astro'
     &:before,
     &:after {
       display: inline-block;
-      content: url('../assets/chevron-right-solid.svg');
+      content: url("../assets/chevron-right-solid.svg");
       position: absolute;
       right: 20px;
       top: 50%;
@@ -276,7 +276,7 @@ import Footer from '../components/Footer.astro'
     // border-left: 1px solid var(--light-gray);
     // padding-left: 1rem;
     color: var(--blue);
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     text-transform: uppercase;
     font-size: 1rem;
     font-weight: 600;
@@ -302,7 +302,7 @@ import Footer from '../components/Footer.astro'
     .close-icon {
       display: none;
     }
-    &[aria-expanded='true'] {
+    &[aria-expanded="true"] {
       .close-icon {
         display: block;
       }
@@ -392,7 +392,7 @@ import Footer from '../components/Footer.astro'
           padding-right: 30px;
         }
         .dropdown-arrow:after {
-          content: url('../assets/chevron-down-solid-blue.svg');
+          content: url("../assets/chevron-down-solid-blue.svg");
           position: absolute;
           width: 13px;
           top: 50%;
@@ -479,29 +479,92 @@ import Footer from '../components/Footer.astro'
       }
     }
   }
+
+  table {
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    table-layout: fixed;
+    width: 100%;
+    border-radius: var(--border-rad);
+    box-shadow: var(--drop-shadow);
+  }
+
+  table tr {
+    // background-color: #f8f8f8;
+    // border: 1px solid var(--light-gray);
+    border-bottom: 1px solid var(--light-gray);
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  table th {
+    background-color: var(--light-gray);
+  }
+
+  table th,
+  table td {
+    padding: 1rem;
+    text-align: center;
+    border-left: 1px solid var(--light-gray);
+    &:first-child {
+      border-left: none;
+    }
+    * {
+      margin: 0;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    table thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+
+    table tr {
+      border-bottom: 3px solid #ddd;
+      display: block;
+    }
+
+    table td {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      text-align: right;
+    }
+
+    table td::before {
+      content: attr(data-label);
+      float: left;
+    }
+  }
 </style>
 
 <script>
-  const elementsToObserve = document.querySelectorAll('.observe')
+  const elementsToObserve = document.querySelectorAll(".observe");
 
   if (elementsToObserve.length) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(({ target, isIntersecting }) => {
-          if (target.classList.contains('toggle')) {
-            target.classList.toggle('in-view', isIntersecting)
+          if (target.classList.contains("toggle")) {
+            target.classList.toggle("in-view", isIntersecting);
           } else if (isIntersecting) {
-            target.classList.add('in-view')
-            observer.unobserve(target)
+            target.classList.add("in-view");
+            observer.unobserve(target);
           }
-        })
+        });
       },
       {
         threshold: 0.5,
-        rootMargin: '0px'
-      }
-    )
+        rootMargin: "0px",
+      },
+    );
 
-    elementsToObserve.forEach((element) => observer.observe(element))
+    elementsToObserve.forEach((element) => observer.observe(element));
   }
 </script>
