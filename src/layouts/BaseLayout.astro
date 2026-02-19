@@ -514,8 +514,9 @@ import Footer from "../components/Footer.astro";
       margin: 0;
     }
   }
-  @media screen and (max-width: 600px) {
-    table thead {
+  @media screen and (max-width: 37.5rem) {
+    tr:has(th),
+    table th {
       border: none;
       clip: rect(0 0 0 0);
       height: 1px;
@@ -527,24 +528,45 @@ import Footer from "../components/Footer.astro";
     }
 
     table tr {
-      border-bottom: 3px solid #ddd;
+      border-bottom: 3px solid var(--light-gray);
       display: block;
+      padding: 0.5rem 0;
     }
 
     table td {
-      border-bottom: 1px solid #ddd;
-      display: block;
+      border-bottom: 1px solid var(--light-gray);
+      border-left: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       text-align: right;
+      padding: 0.75rem 1rem;
+      &:last-child {
+        border-bottom: none;
+      }
     }
 
     table td::before {
       content: attr(data-label);
-      float: left;
+      font-weight: 700;
+      text-align: left;
+      padding-right: 1rem;
     }
   }
 </style>
 
 <script>
+  document.querySelectorAll("table").forEach((table) => {
+    const headers = Array.from(table.querySelectorAll("th")).map(
+      (th) => th.textContent?.trim() ?? "",
+    );
+    table.querySelectorAll("tbody tr").forEach((row) => {
+      row.querySelectorAll("td").forEach((td, i) => {
+        if (headers[i]) td.setAttribute("data-label", headers[i]);
+      });
+    });
+  });
+
   const elementsToObserve = document.querySelectorAll(".observe");
 
   if (elementsToObserve.length) {
