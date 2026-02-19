@@ -23,6 +23,7 @@ export default defineConfig({
           ? env.STORYBLOK_PREVIEW_TOKEN
           : env.STORYBLOK_PUBLIC_TOKEN,
       bridge: env.STORYBLOK_IS_PREVIEW === 'yes',
+      livePreview: env.STORYBLOK_IS_PREVIEW === 'yes',
       components: {
         page: 'storyblok/Page',
         config: 'storyblok/Config',

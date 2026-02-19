@@ -1,5 +1,5 @@
 ---
-import { useStoryblokApi } from "@storyblok/astro"
+import { getLiveStory, useStoryblokApi } from "@storyblok/astro"
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
 import isPreview from "../utils/isPreview"
@@ -36,13 +36,18 @@ if (slug && slug.startsWith(".well-known/")) {
   return Astro.redirect("/404")
 }
 
-const storyblokApi = useStoryblokApi()
+let story = null
 
-const { data } = await storyblokApi.get(`cdn/stories/${path}`, {
-  version: isPreview() ? "draft" : "published"
-})
-
-const story = data.story
+const liveStory = await getLiveStory(Astro)
+if (liveStory) {
+  story = liveStory
+} else {
+  const storyblokApi = useStoryblokApi()
+  const { data } = await storyblokApi.get(`cdn/stories/${path}`, {
+    version: isPreview() ? "draft" : "published"
+  })
+  story = data.story
+}
 ---
 
 <BaseLayout>
