@@ -556,6 +556,7 @@ import Footer from "../components/Footer.astro";
 </style>
 
 <script>
+  // Add data-label attribute to table cells for mobile
   document.querySelectorAll("table").forEach((table) => {
     const headers = Array.from(table.querySelectorAll("th")).map(
       (th) => th.textContent?.trim() ?? "",
@@ -567,6 +568,7 @@ import Footer from "../components/Footer.astro";
     });
   });
 
+  // Setup Intersection Observer for fade-in animations
   const elementsToObserve = document.querySelectorAll(".observe");
 
   if (elementsToObserve.length) {
