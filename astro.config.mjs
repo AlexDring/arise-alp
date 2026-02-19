@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config'
 import basicSsl from '@vitejs/plugin-basic-ssl'
-import storyblok from '@storyblok/astro'
+import { storyblok } from '@storyblok/astro'
 import netlify from '@astrojs/netlify'
 import sitemap from '@astrojs/sitemap'
 import { loadEnv } from 'vite'
